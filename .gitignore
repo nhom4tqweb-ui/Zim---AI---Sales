@@ -1,0 +1,8 @@
+node_modules/
+.env
+.DS_Store
+target/
+*.iml
+.idea/
+.mvn/
+application-local.properties

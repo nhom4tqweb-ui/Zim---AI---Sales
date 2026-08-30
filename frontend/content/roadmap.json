@@ -1,0 +1,131 @@
+{
+  "_huong_dan": "File nay chua du lieu lo trinh ca nhan hoa hien thi o Buoc 3. Moi lo trinh duoc match theo 'goal' (lay tu Buoc 1 - Ban 4) va 'level' (suy ra tu diem Mini Test o Buoc 2 - Ban 5). Noi dung ben duoi la ban nhap tham khao dua tren research ve ZIM - sua lai theo van phong nhom neu can.",
+
+  "usp_points": [
+    {
+      "icon": "adaptive",
+      "title": "ZIM Adaptive Learning - Học theo năng lực riêng",
+      "description": "Lộ trình được điều chỉnh dựa trên kết quả chẩn đoán đầu vào của bạn, không học chung một giáo trình cho tất cả mọi người."
+    },
+    {
+      "icon": "commitment",
+      "title": "Cam kết đầu ra rõ ràng",
+      "description": "Mục tiêu điểm số được xác định ngay từ đầu, có thi thử định kỳ để đo tiến độ và điều chỉnh kịp thời."
+    },
+    {
+      "icon": "support",
+      "title": "Đồng hành sát sao cùng giảng viên",
+      "description": "Giảng viên theo dõi trực tiếp quá trình học, hỗ trợ giải đáp qua diễn đàn ZIM Helper ngoài giờ lên lớp."
+    }
+  ],
+
+  "roadmaps": {
+    "IELTS": {
+      "beginner": {
+        "level_label": "Mất gốc - Nền tảng",
+        "target_score": "4.5 - 5.0",
+        "duration_weeks": 12,
+        "milestones": [
+          { "week": "Tuần 1-4", "title": "Xây nền tảng từ vựng & ngữ pháp cốt lõi", "description": "Hệ thống hóa ngữ pháp cơ bản và từ vựng theo chủ đề thường gặp trong đề thi IELTS, học theo phương pháp Contextualized Learning để dễ nhớ và áp dụng ngay." },
+          { "week": "Tuần 5-8", "title": "Luyện 4 kỹ năng nền tảng", "description": "Bắt đầu luyện tập có định hướng cả Nghe - Nói - Đọc - Viết ở mức cơ bản, làm quen dạng đề thi thật." },
+          { "week": "Tuần 9-12", "title": "Luyện đề & thi thử đánh giá", "description": "Làm quen áp lực phòng thi qua các buổi thi thử IELTS 4 kỹ năng miễn phí hằng tuần, điều chỉnh chiến lược làm bài." }
+        ]
+      },
+      "intermediate": {
+        "level_label": "Trung bình - Nâng cao",
+        "target_score": "5.5 - 6.0",
+        "duration_weeks": 10,
+        "milestones": [
+          { "week": "Tuần 1-4", "title": "Củng cố & mở rộng vốn từ học thuật", "description": "Bổ sung từ vựng - cấu trúc câu nâng cao, tập trung khắc phục lỗi sai thường gặp ở band 5.0-5.5." },
+          { "week": "Tuần 5-7", "title": "Tập trung Writing & Speaking", "description": "Đi sâu rèn luyện 2 kỹ năng thường là điểm yếu, luyện theo khung tiêu chí chấm điểm thực tế." },
+          { "week": "Tuần 8-10", "title": "Luyện đề tổng hợp & phản biện bài làm", "description": "Làm đề thi thử toàn diện, được giảng viên chữa chi tiết từng lỗi để tối ưu điểm số trước ngày thi." }
+        ]
+      },
+      "advanced": {
+        "level_label": "Khá - Nâng cao phá điểm",
+        "target_score": "6.5 - 7.0+",
+        "duration_weeks": 8,
+        "milestones": [
+          { "week": "Tuần 1-3", "title": "Nâng cấp chiến lược làm bài", "description": "Tập trung vào các dạng câu hỏi khó, kỹ thuật xử lý bẫy đề thường gặp ở band 6.5 trở lên." },
+          { "week": "Tuần 4-6", "title": "Luyện chuyên sâu Writing Task 2 & Speaking Part 3", "description": "Phát triển tư duy phản biện, mở rộng ý tưởng học thuật để đạt điểm cao ở phần khó nhất của bài thi." },
+          { "week": "Tuần 7-8", "title": "Thi thử sát đề thật & tinh chỉnh", "description": "Thi thử với format sát đề thi thật, nhận phản hồi 1-1 để tinh chỉnh những điểm còn thiếu trước ngày thi chính thức." }
+        ]
+      }
+    },
+    "TOEIC": {
+      "beginner": {
+        "level_label": "Mất gốc - Nền tảng",
+        "target_score": "350+",
+        "duration_weeks": 10,
+        "milestones": [
+          { "week": "Tuần 1-3", "title": "Nền tảng từ vựng & ngữ pháp theo chủ đề", "description": "Xây dựng vốn từ vựng công sở, ngữ pháp cơ bản cần thiết cho bài thi TOEIC." },
+          { "week": "Tuần 4-7", "title": "Làm quen cấu trúc đề thi", "description": "Luyện tập từng phần Listening & Reading theo cấu trúc đề thi thật, xây phản xạ làm bài." },
+          { "week": "Tuần 8-10", "title": "Luyện đề & thi thử đánh giá", "description": "Làm đề tổng hợp, thi thử để đo tiến độ và điều chỉnh trước khi thi thật." }
+        ]
+      },
+      "intermediate": {
+        "level_label": "Trung bình",
+        "target_score": "550+",
+        "duration_weeks": 8,
+        "milestones": [
+          { "week": "Tuần 1-3", "title": "Củng cố điểm yếu qua chẩn đoán đầu vào", "description": "Tập trung vào các dạng câu hay sai dựa trên kết quả Mini Test, bổ sung từ vựng nâng cao." },
+          { "week": "Tuần 4-6", "title": "Luyện tốc độ & kỹ thuật làm bài", "description": "Rèn kỹ thuật loại trừ đáp án, quản lý thời gian để không bị hụt giờ ở phần Reading." },
+          { "week": "Tuần 7-8", "title": "Luyện đề tổng hợp sát đề thi thật", "description": "Làm đề đầy đủ theo đúng thời gian thi thật, chữa lỗi chi tiết cùng giảng viên." }
+        ]
+      },
+      "advanced": {
+        "level_label": "Khá - Nâng cao",
+        "target_score": "750+",
+        "duration_weeks": 6,
+        "milestones": [
+          { "week": "Tuần 1-2", "title": "Xử lý các dạng câu khó & bẫy đề", "description": "Tập trung vào Part 6, 7 (Reading) và các đoạn hội thoại dài (Listening) - nơi dễ mất điểm nhất ở mức điểm cao." },
+          { "week": "Tuần 3-4", "title": "Luyện tốc độ nước rút", "description": "Tối ưu tốc độ làm bài để hoàn thành trọn vẹn đề thi trong thời gian quy định." },
+          { "week": "Tuần 5-6", "title": "Thi thử & tinh chỉnh điểm số", "description": "Thi thử liên tục, phân tích lỗi sai để đảm bảo đạt mục tiêu điểm số đề ra." }
+        ]
+      }
+    },
+    "Giao tiếp": {
+      "beginner": {
+        "level_label": "Mất gốc giao tiếp",
+        "target_score": "Giao tiếp cơ bản",
+        "duration_weeks": 12,
+        "milestones": [
+          { "week": "Tuần 1-4", "title": "Phát âm & phản xạ câu cơ bản", "description": "Sửa lỗi phát âm nền tảng, luyện phản xạ với các mẫu câu giao tiếp hằng ngày." },
+          { "week": "Tuần 5-8", "title": "Giao tiếp theo tình huống thực tế", "description": "Thực hành hội thoại theo các chủ đề gần gũi: mua sắm, hỏi đường, giới thiệu bản thân..." },
+          { "week": "Tuần 9-12", "title": "Luyện phản xạ tự nhiên", "description": "Tăng cường luyện nói với giảng viên/bạn học để tự tin phản xạ mà không cần dịch trong đầu." }
+        ]
+      },
+      "intermediate": {
+        "level_label": "Giao tiếp tự tin",
+        "target_score": "Giao tiếp thành thạo",
+        "duration_weeks": 8,
+        "milestones": [
+          { "week": "Tuần 1-3", "title": "Mở rộng chủ đề giao tiếp", "description": "Luyện nói về các chủ đề đa dạng hơn: công việc, sở thích, quan điểm cá nhân." },
+          { "week": "Tuần 4-6", "title": "Luyện phát âm & ngữ điệu tự nhiên", "description": "Tinh chỉnh ngữ điệu, nhấn trọng âm để nói tự nhiên và dễ nghe hơn." },
+          { "week": "Tuần 7-8", "title": "Thực hành hội thoại nâng cao", "description": "Luyện tập qua các buổi hội thoại nhóm, tình huống giả lập gần với môi trường thực tế." }
+        ]
+      },
+      "advanced": {
+        "level_label": "Giao tiếp chuyên nghiệp",
+        "target_score": "Giao tiếp công việc/học thuật",
+        "duration_weeks": 6,
+        "milestones": [
+          { "week": "Tuần 1-2", "title": "Ngôn ngữ chuyên ngành & công sở", "description": "Luyện từ vựng, mẫu câu dùng trong môi trường công việc: họp, thuyết trình, email." },
+          { "week": "Tuần 3-4", "title": "Kỹ năng thuyết trình & tranh luận", "description": "Rèn khả năng trình bày quan điểm mạch lạc, tự tin phản biện bằng tiếng Anh." },
+          { "week": "Tuần 5-6", "title": "Thực hành tình huống chuyên nghiệp", "description": "Mô phỏng các tình huống thực tế: phỏng vấn, họp với đối tác nước ngoài." }
+        ]
+      }
+    }
+  },
+
+  "self_study_vs_zim": {
+    "title": "So sánh: Tự học vs Học cùng ZIM",
+    "criteria": [
+      { "label": "Thời gian đạt mục tiêu", "self_study": "Không cố định, dễ kéo dài do thiếu định hướng rõ ràng", "zim": "Có lộ trình rõ theo tuần, tối ưu thời gian nhờ tập trung kiến thức trọng tâm" },
+      { "label": "Tài liệu học tập", "self_study": "Tự tìm kiếm, chất lượng không đồng đều, dễ lạc giữa quá nhiều nguồn", "zim": "Tài liệu biên soạn theo phương pháp Contextualized Learning, bám sát đề thi thật" },
+      { "label": "Theo dõi tiến độ", "self_study": "Tự đánh giá, khó biết chính xác đang ở mức nào", "zim": "Thi thử định kỳ, có giảng viên chấm và phản hồi cụ thể" },
+      { "label": "Hỗ trợ khi bí kiến thức", "self_study": "Một mình xoay sở, dễ nản khi gặp khó", "zim": "Có giảng viên đồng hành và diễn đàn ZIM Helper hỗ trợ giải đáp" },
+      { "label": "Rủi ro lệch hướng ôn tập", "self_study": "Cao - dễ học lan man, không đúng trọng tâm đề thi", "zim": "Thấp - lộ trình được cá nhân hóa theo đúng năng lực và mục tiêu" }
+    ]
+  }
+}

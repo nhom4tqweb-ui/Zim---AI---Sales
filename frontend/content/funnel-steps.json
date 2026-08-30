@@ -1,0 +1,36 @@
+{
+  "step_1": {
+    "title": "Khai thác nhu cầu thông minh",
+    "questions": {
+      "goal": {
+        "prompt": "",
+        "options": ["IELTS", "TOEIC", "Giao tiếp"]
+      },
+      "time_barrier": {
+        "prompt": "",
+        "options": []
+      },
+      "budget": {
+        "prompt": "",
+        "options": []
+      }
+    }
+  },
+  "step_2": {
+    "title": "Mini Test đầu vào & AI Chẩn đoán",
+    "multiple_choice_questions": [],
+    "writing_prompt": ""
+  },
+  "step_3": {
+    "title": "Giải pháp & Khẳng định Giá trị",
+    "usp_points": []
+  },
+  "step_4": {
+    "title": "Báo giá & Xử lý Rào cản",
+    "pricing_note": "",
+    "objection_scripts": {
+      "too_expensive": "",
+      "no_time": ""
+    }
+  }
+}

@@ -1,0 +1,5 @@
+# FILE NAY DANH CHO CA NHAN TREN MAY LOCAL - DA DUOC GITIGNORE, KHONG BAO GIO COMMIT.
+# Copy noi dung nay, doi ten thanh application-local.properties (bo phan -example),
+# roi dien key that vao de test tien loi ma khong can 'export' bien moi truong.
+
+gemini.api.key=AIzaSy_dan_key_that_cua_ban_vao_day

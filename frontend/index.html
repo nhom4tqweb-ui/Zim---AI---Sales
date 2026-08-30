@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZIM Academy - Học Tiếng Anh Cá Nhân Hóa Cùng Trợ Lý AI</title>
+
+  <!-- Tailwind CDN (theo quy định kỹ thuật của dự án) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter / Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+  <!-- ============ HEADER ============ -->
+  <header class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="font-extrabold text-red-700 text-xl">ZIM Academy</div>
+      <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+        <a href="#">Khóa học</a>
+        <a href="#">Thi thử</a>
+        <a href="#">Học cùng AI</a>
+      </nav>
+      <button class="bg-red-700 hover:bg-red-800 text-white font-medium py-2 px-5 rounded-xl transition duration-200 text-sm">
+        Trải nghiệm Sales AI Cá nhân hóa
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ 1. HERO SECTION ============ -->
+  <section id="hero" class="max-w-7xl mx-auto px-6 py-16 text-center">
+    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-800">
+      Học Tiếng Anh Cá Nhân Hóa Cùng Trợ Lý AI ZIM
+    </h1>
+    <p class="mt-4 text-sm md:text-base text-slate-500 max-w-2xl mx-auto">
+      <!-- TODO: nội dung sub-headline do team content biên tập, xem frontend/content/hero.json -->
+    </p>
+    <button class="mt-6 bg-red-700 hover:bg-red-800 text-white font-medium py-3 px-6 rounded-xl transition duration-200">
+      Nhận Lộ Trình & Báo Giá Sau 2 Phút
+    </button>
+  </section>
+
+  <!-- Chatbot widget nổi góc phải -->
+  <div id="ai-chatbot-widget" class="fixed bottom-6 right-6">
+    <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+      AI Tư vấn
+    </span>
+    <!-- TODO: chatbot UI, kết nối tới backend /api/chat -->
+  </div>
+
+  <!-- ============ 2. AI INTERACTIVE SALES FUNNEL ============ -->
+  <section id="ai-funnel" class="max-w-4xl mx-auto px-6 py-12">
+    <div id="funnel-step-1" class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 mb-4">
+      <h3 class="text-lg md:text-xl font-semibold">Bước 1: Khai thác nhu cầu</h3>
+      <!-- TODO: form chọn mục tiêu IELTS/TOEIC/Giao tiếp, rào cản thời gian & ngân sách -->
+    </div>
+
+    <div id="funnel-step-2" class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 mb-4 hidden">
+      <h3 class="text-lg md:text-xl font-semibold">Bước 2: Mini Test & AI Chẩn đoán</h3>
+      <!-- TODO: 3 câu trắc nghiệm + 1 câu viết ngắn, kết quả AI phân tích -->
+    </div>
+
+    <div id="funnel-step-3" class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 mb-4 hidden">
+      <h3 class="text-lg md:text-xl font-semibold">Bước 3: Giải pháp & Khẳng định Giá trị</h3>
+      <!-- Nội dung được render động bởi renderStep3() trong js/funnel.js -->
+    </div>
+
+    <div id="funnel-step-4" class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 hidden">
+      <h3 class="text-lg md:text-xl font-semibold">Bước 4: Báo giá & Xử lý Rào cản</h3>
+      <!-- TODO: bảng giá minh bạch, box tương tác "Tôi thấy đắt" / "Sợ bận" -->
+    </div>
+
+    <!-- ================================================================
+         NÚT TEST TẠM THỜI — chỉ dùng để xem trước Step 3 khi Step 1 & 2
+         của Bạn 4 / Bạn 5 chưa code xong. Xóa khối này khi ghép bản thật.
+         ================================================================ -->
+    <div class="mt-6 p-4 border border-dashed border-indigo-300 rounded-xl bg-indigo-50/40">
+      <p class="text-xs text-slate-500 mb-2">[DEV TEST] Giả lập dữ liệu từ Step 1 & 2 để xem trước Step 3:</p>
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="funnelState.goal='IELTS'; funnelState.diagnosis={level:'beginner'}; goToStep(3);" class="text-xs py-1.5 px-3 rounded-full border border-slate-300 hover:bg-white">IELTS · Mất gốc</button>
+        <button onclick="funnelState.goal='IELTS'; funnelState.diagnosis={level:'intermediate'}; goToStep(3);" class="text-xs py-1.5 px-3 rounded-full border border-slate-300 hover:bg-white">IELTS · Trung bình</button>
+        <button onclick="funnelState.goal='TOEIC'; funnelState.diagnosis={level:'advanced'}; goToStep(3);" class="text-xs py-1.5 px-3 rounded-full border border-slate-300 hover:bg-white">TOEIC · Khá</button>
+        <button onclick="funnelState.goal='Giao tiếp'; funnelState.diagnosis={level:'beginner'}; goToStep(3);" class="text-xs py-1.5 px-3 rounded-full border border-slate-300 hover:bg-white">Giao tiếp · Mất gốc</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. CHỐT ĐƠN & THANH TOÁN ============ -->
+  <section id="checkout" class="max-w-2xl mx-auto px-6 py-12">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-lg p-6">
+      <div id="countdown-timer" class="text-red-700 font-semibold text-center mb-4">15:00</div>
+      <!-- TODO: mockup VietQR tự động điền nội dung chuyển khoản -->
+    </div>
+  </section>
+
+  <!-- ============ 4. ONBOARDING & DASHBOARD ============ -->
+  <section id="onboarding" class="max-w-4xl mx-auto px-6 py-12">
+    <!-- TODO: cấp mã học viên, bàn giao lớp học & tài liệu, box thử AI Trợ giảng -->
+  </section>
+
+  <!-- ============ 5. EXIT-INTENT POPUP ============ -->
+  <div id="exit-intent-popup" class="hidden fixed inset-0 bg-black/50 items-center justify-center">
+    <div class="bg-white rounded-2xl p-8 max-w-md mx-auto text-center">
+      <!-- TODO: copy giữ chân + tặng Ebook đổi Email/Zalo -->
+    </div>
+  </div>
+
+  <script src="js/chatbot.js" defer></script>
+  <script src="js/funnel.js" defer></script>
+  <script src="js/countdown.js" defer></script>
+</body>
+</html>
