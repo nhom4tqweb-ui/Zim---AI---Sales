@@ -1,0 +1,633 @@
+<title>Báo giá &amp; Xử lý rào cản</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --primary: #b91c1c;
+    --primary-hover: #9a1b1b;
+    --primary-light: #fef2f2;
+    --ai: #4f46e5;
+    --ai-light: #eef2ff;
+    --ai-border: #c7d2fe;
+    --ink: #1e293b;
+    --muted: #64748b;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --success: #059669;
+    --success-bg: #ecfdf5;
+    --success-border: #a7f3d0;
+    --ring: rgba(79, 70, 229, 0.35);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --primary: #ef4444;
+      --primary-hover: #f87171;
+      --primary-light: #3f1414;
+      --ai: #818cf8;
+      --ai-light: #1e1b3d;
+      --ai-border: #3730a3;
+      --ink: #f1f5f9;
+      --muted: #94a3b8;
+      --bg: #0f172a;
+      --card: #1a2436;
+      --border: #2c3a52;
+      --success: #34d399;
+      --success-bg: #10281f;
+      --success-border: #14532d;
+      --ring: rgba(129, 140, 248, 0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --primary: #ef4444;
+    --primary-hover: #f87171;
+    --primary-light: #3f1414;
+    --ai: #818cf8;
+    --ai-light: #1e1b3d;
+    --ai-border: #3730a3;
+    --ink: #f1f5f9;
+    --muted: #94a3b8;
+    --bg: #0f172a;
+    --card: #1a2436;
+    --border: #2c3a52;
+    --success: #34d399;
+    --success-bg: #10281f;
+    --success-border: #14532d;
+    --ring: rgba(129, 140, 248, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); margin: 0; }
+
+  .zim-section {
+    background: var(--bg);
+    color: var(--ink);
+    padding: 64px 20px 96px;
+    display: flex;
+    justify-content: center;
+  }
+  .zim-wrap { width: 100%; max-width: 1080px; }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin: 0 0 12px;
+  }
+  h2.zim-h1 {
+    font-family: "Plus Jakarta Sans", Inter, sans-serif;
+    font-size: 1.875rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    text-wrap: balance;
+    max-width: 26ch;
+  }
+  @media (min-width: 768px) { h2.zim-h1 { font-size: 3rem; } }
+
+  p.zim-lede {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 48px;
+  }
+
+  h3.zim-h2 {
+    font-family: "Plus Jakarta Sans", Inter, sans-serif;
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  @media (min-width: 768px) { h3.zim-h2 { font-size: 1.75rem; } }
+
+  h4.zim-h3 {
+    font-family: "Plus Jakarta Sans", Inter, sans-serif;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+  @media (min-width: 768px) { h4.zim-h3 { font-size: 1.125rem; } }
+
+  .zim-caption {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- Rào cản cards ---------- */
+  .objection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 64px;
+  }
+  .objection-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .objection-card:hover {
+    box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.16);
+    transform: translateY(-4px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .objection-card, .pkg-card, .chip, .btn { transition: none !important; }
+    .objection-card:hover, .pkg-card:hover { transform: none !important; }
+  }
+  .objection-icon {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .objection-quote {
+    font-size: 0.9375rem;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+  .objection-quote::before { content: "“"; }
+  .objection-quote::after { content: "”"; }
+  .objection-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .objection-answer {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0 0 18px;
+    flex-grow: 1;
+  }
+  .ask-ai-btn {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    color: var(--ai);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ask-ai-btn:hover { text-decoration: underline; }
+  .ask-ai-btn:focus-visible, .chip:focus-visible, .btn:focus-visible, input:focus-visible {
+    outline: 2px solid var(--ai);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Pricing ---------- */
+  .pricing-head { margin-bottom: 28px; }
+  .pkg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .pkg-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 26px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .pkg-card:hover {
+    box-shadow: 0 16px 28px -10px rgba(15, 23, 42, 0.18);
+    transform: translateY(-4px);
+  }
+  .pkg-card.is-featured { border-color: var(--primary); position: relative; }
+  .pkg-badge {
+    position: absolute; top: -12px; right: 20px;
+    background: var(--primary); color: #fff;
+    font-size: 0.6875rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 999px;
+  }
+  .pkg-band { color: var(--muted); font-size: 0.8125rem; margin: 0 0 18px; }
+  .pkg-price {
+    font-family: "Plus Jakarta Sans", Inter, sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--ink);
+    margin: 0 0 2px;
+  }
+  .pkg-price small { font-size: 0.8125rem; font-weight: 500; color: var(--muted); }
+  .pkg-note { font-size: 0.75rem; color: var(--muted); margin: 0 0 18px; }
+  .pkg-list { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 9px; flex-grow: 1; }
+  .pkg-list li { display: flex; gap: 8px; font-size: 0.8438rem; color: var(--ink); line-height: 1.5; }
+  .pkg-list svg { flex-shrink: 0; margin-top: 2px; color: var(--success); }
+  .btn {
+    border: none; border-radius: 10px;
+    font-size: 0.875rem; font-weight: 700;
+    padding: 11px 18px; cursor: pointer;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-hover); }
+  .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--muted); }
+  .pkg-selected-note {
+    font-size: 0.75rem; font-weight: 600; color: var(--success);
+    margin-top: 10px; min-height: 16px;
+  }
+
+  .guarantee-bar {
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 72px;
+  }
+  .guarantee-bar p { margin: 0; font-size: 0.875rem; color: var(--ink); line-height: 1.5; max-width: 62ch; }
+  .guarantee-bar strong { color: var(--success); }
+
+  /* ---------- AI Objection Resolver ---------- */
+  .ai-box {
+    background: var(--ai-light);
+    border: 1px solid var(--ai-border);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .ai-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--card);
+    border: 1px solid var(--ai-border);
+    color: var(--ai);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .ai-box h3.zim-h2 { color: var(--ink); }
+  .ai-box p.zim-lede { margin-bottom: 24px; }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+  .chip {
+    background: var(--card);
+    border: 1px solid var(--ai-border);
+    color: var(--ink);
+    font-size: 0.8438rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .chip:hover { border-color: var(--ai); }
+  .chip.is-active { background: var(--ai); border-color: var(--ai); color: #fff; }
+
+  .custom-row { display: flex; gap: 10px; margin-bottom: 22px; }
+  .custom-row input {
+    flex-grow: 1;
+    border: 1px solid var(--ai-border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    background: var(--card);
+    color: var(--ink);
+  }
+  .custom-row input::placeholder { color: var(--muted); }
+  .custom-row .btn { background: var(--ai); color: #fff; white-space: nowrap; }
+  .custom-row .btn:hover { background: #4338ca; }
+
+  .ai-response {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    min-height: 96px;
+  }
+  .ai-response-empty { color: var(--muted); font-size: 0.875rem; margin: 0; }
+  .ai-response-head {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 10px;
+  }
+  .ai-avatar {
+    width: 26px; height: 26px; border-radius: 999px;
+    background: var(--ai); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6875rem; font-weight: 800; flex-shrink: 0;
+  }
+  .ai-response-head span { font-size: 0.8125rem; font-weight: 700; color: var(--ai); }
+  .ai-response-body { font-size: 0.9375rem; line-height: 1.65; color: var(--ink); margin: 0 0 16px; }
+  .typing-dots { display: inline-flex; gap: 4px; padding: 6px 0; }
+  .typing-dots span {
+    width: 6px; height: 6px; border-radius: 999px; background: var(--ai);
+    animation: typingBounce 1s infinite ease-in-out;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typingBounce { 0%, 60%, 100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .typing-dots span { animation: none; opacity: 0.8; }
+  }
+  .ai-response-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ai-disclaimer { font-size: 0.75rem; color: var(--muted); margin: 16px 0 0; }
+</style>
+
+<section class="zim-section">
+  <div class="zim-wrap">
+
+    <p class="eyebrow">Bước 4 · Báo giá &amp; xử lý rào cản</p>
+    <h2 class="zim-h1">Học phí rõ ràng, băn khoăn có lời giải — ngay tại đây</h2>
+    <p class="zim-lede">
+      Trước khi chốt lộ trình, gần như mọi học viên đều mang một trong ba nỗi lo giống nhau.
+      Tư vấn viên ZIM không né tránh — mà giải quyết trực tiếp bằng chính sách thật, dữ liệu thật.
+    </p>
+
+    <!-- ================= RÀO CẢN KINH ĐIỂN ================= -->
+    <div class="objection-grid">
+
+      <article class="objection-card">
+        <div class="objection-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5M12 16h.01"/></svg>
+        </div>
+        <p class="objection-quote">Học phí ZIM hơi cao so với mấy chỗ khác…</p>
+        <p class="objection-label">Tư vấn viên ZIM giải thích</p>
+        <p class="objection-answer">
+          Học phí được tính theo lộ trình cá nhân hoá sau bài kiểm tra đầu vào miễn phí — học viên
+          không trả tiền cho những kỹ năng đã vững, rút ngắn tới 80% thời gian học thừa. Chi phí cho
+          mỗi 0.5 band tăng thêm vì vậy thấp hơn nhiều so với học đại trà.
+        </p>
+        <button class="ask-ai-btn" type="button" onclick="raoCan_hoiAI('hocPhi')">
+          Hỏi AI xử lý câu này
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </article>
+
+      <article class="objection-card">
+        <div class="objection-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        </div>
+        <p class="objection-quote">Công việc/lịch học dày quá, sợ không theo kịp…</p>
+        <p class="objection-label">Tư vấn viên ZIM giải thích</p>
+        <p class="objection-answer">
+          Lịch học linh hoạt tối và cuối tuần, song song lớp Online và Offline; vắng buổi được xếp
+          học bù miễn phí. Một lộ trình chuẩn chỉ gồm 36 giờ chính khoá — tương đương 2 buổi/tuần
+          trong khoảng 2–3 tháng.
+        </p>
+        <button class="ask-ai-btn" type="button" onclick="raoCan_hoiAI('thoiGian')">
+          Hỏi AI xử lý câu này
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </article>
+
+      <article class="objection-card">
+        <div class="objection-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6M15 7h6"/></svg>
+        </div>
+        <p class="objection-quote">Sợ học xong vẫn không lên band như kỳ vọng…</p>
+        <p class="objection-label">Tư vấn viên ZIM giải thích</p>
+        <p class="objection-answer">
+          ZIM cam kết đầu ra bằng văn bản trong hợp đồng: nếu chưa đạt band mục tiêu, học viên được
+          học bổ sung và thi thử lại miễn phí đến khi đạt. 100% giảng viên có band IELTS 7.5–8.5
+          thực chiến.
+        </p>
+        <button class="ask-ai-btn" type="button" onclick="raoCan_hoiAI('hieuQua')">
+          Hỏi AI xử lý câu này
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </article>
+
+    </div>
+
+    <!-- ================= BẢNG GIÁ ================= -->
+    <div class="pricing-head">
+      <h3 class="zim-h2">Bảng giá chi tiết theo lộ trình</h3>
+      <p class="zim-lede" style="margin-bottom:0;">
+        Học phí niêm yết cho lớp tiêu chuẩn tại Hà Nội &amp; TP.HCM, đã bao gồm tài liệu độc quyền
+        ZIM và bài kiểm tra đầu vào. Có ưu đãi riêng theo hình thức lớp và khu vực học.
+      </p>
+    </div>
+
+    <div class="pkg-grid" id="pkgGrid">
+
+      <div class="pkg-card" data-pkg="Foundation 0 → 2.5">
+        <h4 class="zim-h3">Foundation 0 → 2.5</h4>
+        <p class="pkg-band">Dành cho người mới bắt đầu / mất gốc</p>
+        <p class="pkg-price">7.900.000₫ <small>– 12.900.000₫</small></p>
+        <p class="pkg-note">Lớp Micro (5 hv) hoặc Standard (10 hv)</p>
+        <ul class="pkg-list">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>36h chính khoá + 18h bổ trợ</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>Lộ trình cá nhân hoá theo test đầu vào</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>Cam kết đầu ra bằng văn bản</li>
+        </ul>
+        <button class="btn btn-ghost" type="button" onclick="baoGia_chonGoi(this)">Chọn gói này</button>
+        <p class="pkg-selected-note" aria-live="polite"></p>
+      </div>
+
+      <div class="pkg-card is-featured" data-pkg="Accelerate 3.0 → 5.5">
+        <span class="pkg-badge">Phổ biến nhất</span>
+        <h4 class="zim-h3">Accelerate 3.0 → 5.5</h4>
+        <p class="pkg-band">Tăng tốc lên band trung cấp</p>
+        <p class="pkg-price">13.900.000₫ <small>– 19.900.000₫</small></p>
+        <p class="pkg-note">Lớp Micro (5 hv) hoặc Standard (10 hv)</p>
+        <ul class="pkg-list">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>36h chính khoá + 18h bổ trợ</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>Giảng viên band IELTS 7.5+</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>Học bù miễn phí khi vắng buổi</li>
+        </ul>
+        <button class="btn btn-primary" type="button" onclick="baoGia_chonGoi(this)">Chọn gói này</button>
+        <p class="pkg-selected-note" aria-live="polite"></p>
+      </div>
+
+      <div class="pkg-card" data-pkg="Master 6.5 → 7.5+">
+        <h4 class="zim-h3">Master 6.5 → 7.5+</h4>
+        <p class="pkg-band">Bứt phá band cao, luyện đề chuyên sâu</p>
+        <p class="pkg-price">19.900.000₫ <small>– 24.900.000₫</small></p>
+        <p class="pkg-note">Lớp Micro (5 hv) hoặc 1-kèm-1</p>
+        <ul class="pkg-list">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>Giảng viên band IELTS 8.0+</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>Ngân hàng đề thi thử độc quyền</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>Chấm chữa bài viết/nói 1-kèm-1</li>
+        </ul>
+        <button class="btn btn-ghost" type="button" onclick="baoGia_chonGoi(this)">Chọn gói này</button>
+        <p class="pkg-selected-note" aria-live="polite"></p>
+      </div>
+
+    </div>
+
+    <div class="guarantee-bar">
+      <p><strong>Cam kết đầu ra bằng văn bản</strong> trên mọi gói học phí — mức giá cụ thể được tối ưu theo kết quả bài kiểm tra đầu vào và mã ưu đãi hiện hành của từng đợt tuyển sinh.</p>
+    </div>
+
+    <!-- ================= AI OBJECTION RESOLVER ================= -->
+    <div class="ai-box" id="aiBox">
+      <span class="ai-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L4 11l6.6-2.4z"/></svg>
+        ZIM AI Consultant
+      </span>
+      <h3 class="zim-h2">AI Objection Resolver</h3>
+      <p class="zim-lede">Bấm vào đúng băn khoăn bạn đang có — AI sẽ đưa ra lời giải thích thuyết phục, dựa trên chính sách thật của ZIM.</p>
+
+      <div class="chip-row" role="group" aria-label="Chọn rào cản">
+        <button class="chip" type="button" data-loai="hocPhi" onclick="aiResolver_chonRaoCan('hocPhi', this)">💸 Tôi thấy học phí hơi đắt</button>
+        <button class="chip" type="button" data-loai="thoiGian" onclick="aiResolver_chonRaoCan('thoiGian', this)">⏰ Sợ bận, không sắp xếp được thời gian</button>
+        <button class="chip" type="button" data-loai="hieuQua" onclick="aiResolver_chonRaoCan('hieuQua', this)">📉 Sợ học không hiệu quả</button>
+      </div>
+
+      <div class="custom-row">
+        <input
+          type="text"
+          id="aiCustomInput"
+          placeholder="Hoặc nhập băn khoăn khác của bạn…"
+          onkeydown="if(event.key==='Enter'){aiResolver_guiCauHoiTuyChinh();}"
+        />
+        <button class="btn" type="button" onclick="aiResolver_guiCauHoiTuyChinh()">Hỏi AI</button>
+      </div>
+
+      <div class="ai-response" id="aiResponse">
+        <p class="ai-response-empty">Chọn một băn khoăn ở trên để xem AI phản hồi…</p>
+      </div>
+
+      <p class="ai-disclaimer">* Nội dung minh hoạ cho mục đích bài tập lớn — mô phỏng cách AI Objection Resolver phản hồi, câu trả lời được tổng hợp từ chính sách thật của ZIM Academy.</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // ---- Dữ liệu phản hồi AI theo từng loại rào cản ----
+  var AI_PHAN_HOI = {
+    hocPhi: {
+      nhan: "Về học phí",
+      noiDung: "Hiểu là con số đầu tiên luôn khiến bạn cân nhắc kỹ! Nhưng học phí ZIM không tính đại trà — sau bài kiểm tra đầu vào miễn phí, lộ trình được cá nhân hoá để bạn không trả tiền cho những kỹ năng đã vững, rút ngắn tới 80% thời gian học thừa. Vì vậy chi phí cho mỗi 0.5 band tăng thêm thực tế thấp hơn nhiều so với việc học lại từ đầu ở nơi khác. Bạn cũng có thể chọn lớp Micro, Standard hoặc 1-kèm-1 để tối ưu theo ngân sách."
+    },
+    thoiGian: {
+      nhan: "Về thời gian",
+      noiDung: "Rất nhiều học viên ZIM đang đi làm hoặc đi học full-time, nên lịch học được thiết kế linh hoạt: có khung tối và cuối tuần, song song lớp Online và Offline. Một lộ trình chuẩn chỉ gồm 36 giờ chính khoá — khoảng 2 buổi/tuần trong 2–3 tháng — và nếu vướng bận, bạn được xếp học bù miễn phí chứ không mất buổi."
+    },
+    hieuQua: {
+      nhan: "Về hiệu quả đầu ra",
+      noiDung: "Đây là lo lắng chính đáng nhất, và cũng là điều ZIM cam kết rõ ràng nhất: đầu ra được ghi bằng văn bản trong hợp đồng. Nếu sau lộ trình bạn chưa đạt band mục tiêu, ZIM sắp xếp học bổ sung và thi thử lại miễn phí đến khi đạt — không thu thêm phí. Đội ngũ giảng viên đứng lớp đều có band IELTS 7.5–8.5 thực chiến, không chỉ lý thuyết."
+    },
+    default: {
+      nhan: "Câu trả lời gợi ý",
+      noiDung: "Cảm ơn bạn đã chia sẻ băn khoăn này! Đây là câu hỏi khá cụ thể, nên cách nhanh và chính xác nhất là để tư vấn viên ZIM xem trực tiếp lộ trình và mục tiêu band của bạn, từ đó đưa ra phương án phù hợp nhất — miễn phí và không ràng buộc."
+    }
+  };
+
+  var aiDangGoLoai = null; // loại rào cản đang hiển thị, để tránh render chồng khi bấm nhanh
+
+  function raoCan_hoiAI(loaiRaoCan) {
+    var aiBox = document.getElementById("aiBox");
+    if (aiBox) {
+      aiBox.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    var chip = document.querySelector('.chip[data-loai="' + loaiRaoCan + '"]');
+    aiResolver_chonRaoCan(loaiRaoCan, chip);
+  }
+
+  function aiResolver_chonRaoCan(loaiRaoCan, chipEl) {
+    document.querySelectorAll(".chip").forEach(function (c) {
+      c.classList.remove("is-active");
+    });
+    if (chipEl) chipEl.classList.add("is-active");
+    var customInput = document.getElementById("aiCustomInput");
+    if (customInput) customInput.value = "";
+    aiResolver_hienThiPhanHoi(AI_PHAN_HOI[loaiRaoCan] || AI_PHAN_HOI.default, loaiRaoCan);
+  }
+
+  function aiResolver_guiCauHoiTuyChinh() {
+    var input = document.getElementById("aiCustomInput");
+    if (!input) return;
+    var cauHoi = input.value.trim();
+    if (!cauHoi) return;
+
+    document.querySelectorAll(".chip").forEach(function (c) {
+      c.classList.remove("is-active");
+    });
+
+    var loaiKhopVoiTuKhoa = aiResolver_doanLoaiTuCauHoi(cauHoi);
+    aiResolver_hienThiPhanHoi(AI_PHAN_HOI[loaiKhopVoiTuKhoa] || AI_PHAN_HOI.default, loaiKhopVoiTuKhoa, cauHoi);
+  }
+
+  function aiResolver_doanLoaiTuCauHoi(cauHoi) {
+    var text = cauHoi.toLowerCase();
+    if (/(giá|phí|tiền|đắt|budget|chi phí)/.test(text)) return "hocPhi";
+    if (/(bận|thời gian|lịch|không có giờ|đi làm|đi học)/.test(text)) return "thoiGian";
+    if (/(hiệu quả|band|kết quả|không lên|không đạt|thi lại)/.test(text)) return "hieuQua";
+    return "default";
+  }
+
+  function aiResolver_hienThiPhanHoi(phanHoi, loaiRaoCan, cauHoiTuyChinh) {
+    var box = document.getElementById("aiResponse");
+    if (!box) return;
+    aiDangGoLoai = loaiRaoCan;
+
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    box.innerHTML =
+      '<div class="ai-response-head"><span class="ai-avatar">AI</span><span>ZIM AI Consultant đang soạn câu trả lời…</span></div>' +
+      '<div class="typing-dots"><span></span><span></span><span></span></div>';
+
+    var doTre = reduceMotion ? 0 : 700;
+
+    window.setTimeout(function () {
+      if (aiDangGoLoai !== loaiRaoCan) return; // người dùng đã chọn mục khác trong lúc chờ
+      var tieuDe = cauHoiTuyChinh ? '“' + cauHoiTuyChinh + '”' : phanHoi.nhan;
+      box.innerHTML =
+        '<div class="ai-response-head"><span class="ai-avatar">AI</span><span>' + tieuDe + '</span></div>' +
+        '<p class="ai-response-body">' + phanHoi.noiDung + '</p>' +
+        '<div class="ai-response-actions">' +
+          '<button class="btn btn-primary" type="button" onclick="baoGia_cuonLenBangGia()">Xem lại bảng giá</button>' +
+        '</div>';
+    }, doTre);
+  }
+
+  // ---- Bảng giá ----
+  function baoGia_chonGoi(btnEl) {
+    var card = btnEl.closest(".pkg-card");
+    if (!card) return;
+    var tenGoi = card.getAttribute("data-pkg");
+
+    document.querySelectorAll(".pkg-selected-note").forEach(function (note) {
+      note.textContent = "";
+    });
+    var note = card.querySelector(".pkg-selected-note");
+    if (note) note.textContent = "Đã chọn: " + tenGoi + " ✓";
+  }
+
+  function baoGia_cuonLenBangGia() {
+    var grid = document.getElementById("pkgGrid");
+    if (grid) grid.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+</script>
