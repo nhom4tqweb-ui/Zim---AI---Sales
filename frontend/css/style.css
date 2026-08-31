@@ -1,0 +1,219 @@
+/* ==========================================================
+   STYLE.CSS - Giao diện Modal chốt khóa học (Step 5)
+   ========================================================== */
+
+:root {
+  --primary-red: #e11d2e;
+  --dark-text: #1a1a1a;
+  --gray-bg: #f6f7fb;
+  --radius-lg: 18px;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--gray-bg);
+}
+
+.demo-page .old-price {
+  text-decoration: line-through;
+  color: #9ca3af;
+  font-size: 14px;
+}
+.demo-page .new-price {
+  color: var(--primary-red);
+  font-size: 26px;
+  font-weight: 800;
+}
+.course-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* ---------------- MODAL OVERLAY ---------------- */
+.modal-overlay {
+  display: none; /* Bật bằng JS khi mở modal */
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 20, 0.55);
+  z-index: 1050;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-overlay.active {
+  display: flex;
+}
+
+.payment-modal {
+  background: #fff;
+  width: 100%;
+  max-width: 440px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalPopIn 0.25s ease-out;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+@keyframes modalPopIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* ---------------- HEADER (Đồng hồ đếm ngược) ---------------- */
+.modal-header-custom {
+  background: linear-gradient(135deg, var(--primary-red), #ff5c3a);
+  color: #fff;
+  padding: 24px 24px 18px;
+  text-align: center;
+}
+.urgency-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+.modal-title {
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.modal-subtitle {
+  font-size: 13px;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.countdown-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.countdown-box {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  min-width: 62px;
+  padding: 6px 4px;
+}
+.countdown-box span {
+  display: block;
+  font-size: 26px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.countdown-box small {
+  font-size: 10px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.countdown-sep {
+  font-size: 22px;
+  font-weight: 800;
+}
+.countdown-note {
+  font-size: 11px;
+  opacity: 0.85;
+  margin: 0;
+}
+/* Trạng thái khẩn cấp khi còn dưới 60s */
+.countdown-wrapper.urgent .countdown-box {
+  background: #ffffff;
+  color: var(--primary-red);
+  animation: pulseUrgent 1s infinite;
+}
+@keyframes pulseUrgent {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+
+/* ---------------- BODY ---------------- */
+.modal-body-custom {
+  padding: 20px 24px 26px;
+}
+
+.price-summary {
+  background: var(--gray-bg);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ---------------- QR FRAME ---------------- */
+.qr-frame {
+  background: #fff;
+  border: 2px dashed var(--primary-red);
+  border-radius: 14px;
+  padding: 14px;
+  display: inline-block;
+}
+.qr-frame img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+
+.transfer-info {
+  background: var(--gray-bg);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 13px;
+  border-bottom: 1px dashed #e2e2e2;
+}
+.info-row:last-child {
+  border-bottom: none;
+}
+.info-label {
+  color: #6b7280;
+}
+.info-value {
+  font-weight: 700;
+  text-align: right;
+  word-break: break-word;
+  max-width: 65%;
+}
+
+.payment-status {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.payment-status.paid {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #047857;
+}

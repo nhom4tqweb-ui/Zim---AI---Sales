@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZIM English Center - Demo Modal Chốt Khóa Học (Step 5)</title>
+
+  <!-- Bootstrap 5 (dùng để dựng khung nhanh, có thể bỏ nếu chỉ dùng CSS thuần) -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ======================================================
+       TRANG DEMO NỀN (giả lập trang Step 4 - Báo giá & Xử lý rào cản
+       trước khi bấm vào Step 5 - Modal chốt khóa học)
+  ======================================================= -->
+  <div class="container demo-page py-5">
+    <h1 class="mb-3">Khóa học "IELTS 6.5+ Cấp Tốc"</h1>
+    <p class="text-muted">
+      Đây là trang demo mô phỏng Step 4 → Step 5 của AI Interactive Sales Funnel.
+      Bấm nút bên dưới để mở <strong>Modal chốt khóa học (Step 5)</strong>.
+    </p>
+
+    <div class="course-card p-4 mb-4">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div>
+          <h4 class="mb-1">Combo IELTS 6.5+ (Adaptive Learning)</h4>
+          <p class="mb-0 text-muted">Lộ trình cá nhân hóa theo kết quả Test đầu vào AI</p>
+        </div>
+        <div class="text-end">
+          <div class="old-price">3.990.000đ</div>
+          <div class="new-price">2.990.000đ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nút mở Modal thanh toán (data attribute mô phỏng dữ liệu khóa học truyền sang) -->
+    <button
+      id="btnOpenPaymentModal"
+      class="btn btn-danger btn-lg px-4"
+      data-course-id="ielts-65-cap-toc"
+      data-course-name="Combo IELTS 6.5+ Cấp Tốc"
+      data-original-price="3990000"
+      data-final-price="2990000"
+    >
+      🔥 Chốt suất ưu đãi ngay
+    </button>
+  </div>
+
+  <!-- ======================================================
+       MODAL CHỐT KHÓA HỌC (STEP 5)
+       - Đồng hồ đếm ngược (FOMO)
+       - Form thông tin học viên
+       - Khung VietQR tự sinh
+  ======================================================= -->
+  <div class="modal-overlay" id="paymentModalOverlay">
+    <div class="payment-modal">
+
+      <!-- Nút đóng modal -->
+      <button class="modal-close-btn" id="btnCloseModal" aria-label="Đóng">&times;</button>
+
+      <!-- ---------- HEADER: Cảnh báo khan hiếm + Đồng hồ đếm ngược ---------- -->
+      <div class="modal-header-custom">
+        <div class="urgency-badge">⚡ ƯU ĐÃI GIỮ CHỖ CÓ HẠN</div>
+        <h3 class="modal-title" id="modalCourseName">Combo IELTS 6.5+ Cấp Tốc</h3>
+        <p class="modal-subtitle">Hoàn tất đăng ký trước khi hết thời gian giữ giá ưu đãi:</p>
+
+        <!-- Đồng hồ đếm ngược - render bởi JS (countdown.js) -->
+        <div class="countdown-wrapper" id="countdownWrapper">
+          <div class="countdown-box">
+            <span id="cdMinutes">10</span>
+            <small>Phút</small>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-box">
+            <span id="cdSeconds">00</span>
+            <small>Giây</small>
+          </div>
+        </div>
+        <p class="countdown-note" id="countdownNote">
+          Sau thời gian trên, hệ thống sẽ hủy giữ chỗ và áp dụng lại giá gốc.
+        </p>
+      </div>
+
+      <div class="modal-body-custom">
+
+        <!-- ---------- BƯỚC A: FORM THÔNG TIN HỌC VIÊN ---------- -->
+        <div id="stepFormInfo">
+          <div class="price-summary mb-3">
+            <div class="d-flex justify-content-between">
+              <span>Giá gốc</span>
+              <span class="text-decoration-line-through text-muted" id="sumOriginalPrice">3.990.000đ</span>
+            </div>
+            <div class="d-flex justify-content-between fw-bold fs-5">
+              <span>Giá ưu đãi</span>
+              <span class="text-danger" id="sumFinalPrice">2.990.000đ</span>
+            </div>
+          </div>
+
+          <form id="enrollmentForm">
+            <div class="mb-3">
+              <label class="form-label">Họ và tên học viên <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="studentName" required placeholder="Nguyễn Văn A" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+              <input type="tel" class="form-control" id="studentPhone" required
+                     pattern="^(0|\+84)[0-9]{9,10}$" placeholder="0987654321" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="studentEmail" placeholder="email@example.com" />
+            </div>
+
+            <button type="submit" class="btn btn-danger w-100 btn-lg" id="btnGenerateQR">
+              Tạo mã QR thanh toán ngay
+            </button>
+            <p class="text-center text-muted small mt-2 mb-0">
+              🔒 Thông tin của bạn được bảo mật và chỉ dùng để kích hoạt khóa học.
+            </p>
+          </form>
+        </div>
+
+        <!-- ---------- BƯỚC B: KHUNG VIETQR (ẩn ban đầu, hiện sau khi tạo đơn) ---------- -->
+        <div id="stepQRPayment" class="d-none text-center">
+          <p class="mb-2">Quét mã QR bằng App Ngân hàng / Ví điện tử để thanh toán:</p>
+
+          <div class="qr-frame">
+            <img id="vietQRImage" src="" alt="Mã VietQR thanh toán" />
+          </div>
+
+          <div class="transfer-info text-start mt-3">
+            <div class="info-row">
+              <span class="info-label">Mã đăng ký</span>
+              <span class="info-value" id="infoOrderCode">--</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Số tiền</span>
+              <span class="info-value text-danger fw-bold" id="infoAmount">--</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Nội dung CK</span>
+              <span class="info-value" id="infoTransferContent">--</span>
+            </div>
+          </div>
+
+          <!-- Trạng thái polling xác nhận thanh toán (demo) -->
+          <div class="payment-status mt-3" id="paymentStatusBox">
+            <div class="spinner-border spinner-border-sm text-danger me-2" role="status"></div>
+            <span>Đang chờ xác nhận thanh toán...</span>
+          </div>
+
+          <button class="btn btn-outline-secondary w-100 mt-3" id="btnBackToForm">
+            ← Quay lại chỉnh sửa thông tin
+          </button>
+        </div>
+
+        <!-- ---------- THÔNG BÁO HẾT HẠN ---------- -->
+        <div id="stepExpired" class="d-none text-center py-4">
+          <p class="fs-1 mb-2">⏰</p>
+          <h5>Đã hết thời gian giữ ưu đãi</h5>
+          <p class="text-muted">Vui lòng làm mới trang để nhận báo giá cập nhật mới nhất.</p>
+          <button class="btn btn-danger" onclick="location.reload()">Làm mới trang</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/modal.js"></script>
+</body>
+</html>
