@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ZIM Academy — AI Sales Chat Widget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+/* Tailwind-compatible utility styles for this standalone widget.
+   Generated locally so the page does not depend on the Tailwind CDN. */
+*,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}
+html{line-height:1.5;-webkit-text-size-adjust:100%;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif}
+body{margin:0;line-height:inherit}
+button,input{font:inherit;margin:0}
+button{text-transform:none;cursor:pointer}
+input::placeholder{opacity:1}
+ul{list-style:none;margin:0;padding:0}
+
+.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.bottom-5{bottom:1.25rem}.right-5{right:1.25rem}.right-2{right:.5rem}.top-2{top:.5rem}.z-50{z-index:50}
+.flex{display:flex}.inline-flex{display:inline-flex}.inline-block{display:inline-block}.hidden{display:none}.flex-1{flex:1 1 0%}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.items-end{align-items:flex-end}.justify-center{justify-content:center}.justify-start{justify-content:flex-start}.justify-between{justify-content:space-between}.shrink-0{flex-shrink:0}
+.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}
+.space-y-1\.5>:not([hidden])~:not([hidden]){margin-top:.375rem}.space-y-3>:not([hidden])~:not([hidden]){margin-top:.75rem}
+.m-0{margin:0}.mx-auto{margin-left:auto;margin-right:auto}.mt-0\.5{margin-top:.125rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-8{margin-top:2rem}.mt-10{margin-top:2.5rem}
+.p-1{padding:.25rem}.p-6{padding:1.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-16{padding-top:4rem;padding-bottom:4rem}.pt-3{padding-top:.75rem}.pb-1{padding-bottom:.25rem}.pb-3{padding-bottom:.75rem}.pl-4{padding-left:1rem}
+.w-1\.5{width:.375rem}.w-5{width:1.25rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-10{width:2.5rem}.w-14{width:3.5rem}.w-\[92vw\]{width:92vw}.h-1\.5{height:.375rem}.h-5{height:1.25rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-10{height:2.5rem}.h-14{height:3.5rem}.h-\[520px\]{height:520px}.min-h-screen{min-height:100vh}.max-w-md{max-width:28rem}.max-w-3xl{max-width:48rem}.max-w-\[240px\]{max-width:240px}.max-w-\[360px\]{max-width:360px}.max-w-\[80\%\]{max-width:80%}.max-h-\[75vh\]{max-height:75vh}
+.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.cursor-pointer{cursor:pointer}
+.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-2xl{border-radius:1rem}.rounded-bl-sm{border-bottom-left-radius:.125rem}.rounded-br-sm{border-bottom-right-radius:.125rem}
+.border{border-width:1px}.border-t{border-top-width:1px}.border-slate-200{border-color:#e2e8f0}.border-indigo-200{border-color:#c7d2fe}.border-red-200{border-color:#fecaca}
+.bg-white{background-color:#fff}.bg-white\/15{background-color:rgb(255 255 255 / .15)}.bg-slate-50{background-color:#f8fafc}.bg-slate-100{background-color:#f1f5f9}.bg-slate-200{background-color:#e2e8f0}.bg-slate-400{background-color:#94a3b8}.bg-indigo-50{background-color:#eef2ff}.bg-red-50{background-color:#fef2f2}.bg-red-700{background-color:#b91c1c}.bg-red-800{background-color:#991b1b}
+.text-white{color:#fff}.text-white\/80{color:rgb(255 255 255 / .8)}.text-red-100{color:#fee2e2}.text-red-700{color:#b91c1c}.text-slate-400{color:#94a3b8}.text-slate-500{color:#64748b}.text-slate-600{color:#475569}.text-slate-800{color:#1e293b}.text-indigo-700{color:#4338ca}
+.text-\[11px\]{font-size:11px}.text-xs{font-size:.75rem;line-height:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}
+.font-medium{font-weight:500}.font-semibold{font-weight:600}.font-extrabold{font-weight:800}.leading-5{line-height:1.25rem}.leading-tight{line-height:1.25}.leading-snug{line-height:1.375}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-.025em}.tracking-wide{letter-spacing:.025em}.uppercase{text-transform:uppercase}.underline{text-decoration-line:underline}.underline-offset-2{text-underline-offset:2px}.list-disc{list-style-type:disc}
+.shadow-sm{box-shadow:0 1px 2px 0 rgb(0 0 0 / .05)}.shadow-lg{box-shadow:0 10px 15px -3px rgb(0 0 0 / .1),0 4px 6px -4px rgb(0 0 0 / .1)}
+.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-duration:150ms;transition-timing-function:cubic-bezier(.4,0,.2,1)}
+.hover\:bg-red-50:hover{background-color:#fef2f2}.hover\:bg-red-800:hover{background-color:#991b1b}.hover\:bg-white\/10:hover{background-color:rgb(255 255 255 / .1)}.hover\:text-slate-800:hover{color:#1e293b}.hover\:text-white:hover{color:#fff}.focus\:bg-white:focus{background-color:#fff}.placeholder\:text-slate-400::placeholder{color:#94a3b8}
+@media (min-width:768px){.md\:text-5xl{font-size:3rem;line-height:1}.md\:text-base{font-size:1rem;line-height:1.5}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}}
+
+/* Widget-specific custom utilities */
+.zim-focus:focus-visible{outline:2px solid #B91C1C;outline-offset:2px}
+/* Ensure each chat message occupies its own full row: AI left, customer right. */
+#zim-messages .zim-msg-enter{display:flex;width:100%;flex:0 0 100%;}
+#zim-messages .zim-msg-enter{box-sizing:border-box;}
+.zim-scroll::-webkit-scrollbar{width:5px}.zim-scroll::-webkit-scrollbar-thumb{background:#E2E8F0;border-radius:999px}
+
+  * { font-family: 'Inter', sans-serif; }
+
+  /* ---- animations ---- */
+  @keyframes zim-pop-in {
+    0% { opacity: 0; transform: translateY(12px) scale(.96); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes zim-bubble-in {
+    0% { opacity: 0; transform: translateY(6px) scale(.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes zim-dot {
+    0%, 60%, 100% { transform: translateY(0); opacity: .4; }
+    30% { transform: translateY(-3px); opacity: 1; }
+  }
+  .zim-panel-enter { animation: zim-pop-in .22s ease-out; }
+  .zim-msg-enter { animation: zim-bubble-in .18s ease-out; }
+  .zim-teaser-enter { animation: zim-bubble-in .25s ease-out; }
+  .zim-dot { animation: zim-dot 1.1s infinite ease-in-out; }
+  .zim-dot:nth-child(2) { animation-delay: .15s; }
+  .zim-dot:nth-child(3) { animation-delay: .3s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zim-panel-enter, .zim-msg-enter, .zim-teaser-enter, .zim-dot { animation: none !important; }
+  }
+
+  .zim-scroll::-webkit-scrollbar { width: 5px; }
+  .zim-scroll::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 999px; }
+
+  .zim-focus:focus-visible { outline: 2px solid #B91C1C; outline-offset: 2px; }
+</style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+  <!-- ============================================================ -->
+  <!-- DEMO PAGE CHROME (not part of the widget — lets you preview   -->
+  <!-- the homepage vs. IELTS-page greeting variant described in the -->
+  <!-- brief). Everything the widget itself needs lives below it.    -->
+  <!-- ============================================================ -->
+  <div class="max-w-3xl mx-auto px-6 py-16">
+    <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+      Demo trang web
+    </span>
+    <h1 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight text-slate-800">
+      ZIM Academy
+    </h1>
+    <p class="mt-3 text-sm md:text-base text-slate-500 leading-relaxed max-w-md">
+      Trang minh hoạ để kiểm thử widget chat. Chọn ngữ cảnh trang bên dưới rồi tải lại widget để xem lời chào tương ứng.
+    </p>
+
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <span class="text-xs font-semibold tracking-wide uppercase text-slate-500">Ngữ cảnh trang:</span>
+      <div class="inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+        <button id="ctx-home" class="zim-focus px-4 py-2 text-sm font-semibold rounded-lg bg-red-700 text-white transition-colors">Trang chủ</button>
+        <button id="ctx-ielts" class="zim-focus px-4 py-2 text-sm font-semibold rounded-lg text-slate-500 hover:text-slate-800 transition-colors">Trang IELTS</button>
+      </div>
+      <button id="ctx-reset" class="zim-focus px-3 py-2 text-xs font-medium text-slate-500 hover:text-slate-800 underline underline-offset-2">
+        Làm mới phiên &amp; tải lại
+      </button>
+    </div>
+
+    <div class="mt-10 rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+      <h3 class="text-lg md:text-xl font-semibold text-slate-800">Ghi chú vận hành widget</h3>
+      <ul class="mt-3 space-y-1.5 text-sm text-slate-500 leading-relaxed list-disc pl-4">
+        <li>Bong bóng gợi mở xuất hiện sau 5s (máy tính) / 8s (di động), chỉ hiện một lần mỗi phiên.</li>
+        <li>Mở widget → 2 tin nhắn chào cách nhau ~500ms → 4 nút gợi ý.</li>
+        <li>Bấm nút gợi ý sẽ đẩy chính nội dung đó vào luồng chat như tin nhắn của người dùng.</li>
+        <li>Đóng widget sẽ không tự mở lại trong cùng phiên truy cập.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- WIDGET ROOT                                                    -->
+  <!-- ============================================================ -->
+  <div id="zim-widget-root" class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3">
+
+    <!-- Teaser bubble (widget closed state) -->
+    <div id="zim-teaser"
+         class="hidden zim-teaser-enter max-w-[240px] bg-white border border-slate-200 shadow-lg rounded-2xl rounded-br-sm px-4 py-3 cursor-pointer">
+      <button id="zim-teaser-close" aria-label="Đóng gợi ý" class="zim-focus absolute -top-2 -right-2 w-5 h-5 rounded-full bg-slate-200 text-slate-600 text-[11px] leading-5 hidden">×</button>
+      <p id="zim-teaser-text" class="text-sm text-slate-800 leading-snug"></p>
+    </div>
+
+    <!-- Chat panel -->
+    <div id="zim-panel"
+         class="hidden zim-panel-enter w-[92vw] max-w-[360px] h-[520px] max-h-[75vh] bg-white rounded-2xl border border-slate-200 shadow-lg flex flex-col overflow-hidden">
+
+      <!-- Header -->
+      <div class="bg-red-700 px-4 py-3.5 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+            <span class="text-white font-extrabold text-sm">Z</span>
+          </div>
+          <div>
+            <p class="text-white text-sm font-semibold leading-tight">ZIM Academy</p>
+            <p class="text-red-100 text-xs leading-tight mt-0.5">Trợ lý tư vấn trực tuyến</p>
+          </div>
+        </div>
+        <button id="zim-close" aria-label="Đóng khung chat" class="zim-focus text-white/80 hover:text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <!-- AI badge strip -->
+      <div class="px-4 pt-3 pb-1 shrink-0">
+        <span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor"/></svg>
+          ZIM AI Consultant
+        </span>
+      </div>
+
+      <!-- Messages -->
+      <div id="zim-messages" class="zim-scroll flex-1 overflow-y-auto px-4 py-3 space-y-3"></div>
+
+      <!-- Quick replies -->
+      <div id="zim-quick-replies" class="hidden px-4 pb-3 flex flex-wrap gap-2 shrink-0"></div>
+
+      <!-- Input -->
+      <div class="border-t border-slate-200 px-3 py-3 flex items-center gap-2 shrink-0">
+        <input id="zim-input" type="text" placeholder="Nhập câu hỏi của bạn..."
+               class="zim-focus flex-1 text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 placeholder:text-slate-400 focus:bg-white transition-colors" />
+        <button id="zim-send" aria-label="Gửi" class="zim-focus shrink-0 w-10 h-10 rounded-xl bg-red-700 hover:bg-red-800 text-white flex items-center justify-center transition-colors">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M2 10L18 3L11 18L9 11.5L2 10Z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Launcher icon -->
+    <button id="zim-launcher" aria-label="Mở khung chat ZIM"
+            class="zim-focus w-14 h-14 rounded-full bg-red-700 hover:bg-red-800 shadow-lg flex items-center justify-center transition-colors relative">
+      <svg id="zim-icon-chat" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v10c0 .83-.67 1.5-1.5 1.5H9l-4.5 4V17H5.5C4.67 17 4 16.33 4 15.5v-10Z"
+              stroke="white" stroke-width="1.7" stroke-linejoin="round"/>
+      </svg>
+      <svg id="zim-icon-close" width="18" height="18" viewBox="0 0 16 16" fill="none" class="hidden">
+        <path d="M1 1L15 15M15 1L1 15" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------ */
+  /* 1. CONFIG — per-page copy. Swap `currentPage` (or wire it up  */
+  /*    to router / body[data-page]) to change the greeting        */
+  /*    without touching any widget logic.                         */
+  /* ------------------------------------------------------------ */
+  const PAGE_CONFIG = {
+    home: {
+      teaserDesktop: "ZIM xin chào 👋 Bạn cần hỗ trợ chọn khóa học hay tìm hiểu lộ trình?",
+      teaserMobile: "Bạn cần ZIM hỗ trợ gì? 👋",
+      greeting1: "Chào bạn 👋 Mình là trợ lý tư vấn trực tuyến của ZIM.",
+      greeting2: "Bạn đang quan tâm nội dung nào? Hãy chọn nhanh bên dưới hoặc nhập câu hỏi nhé.",
+      quickReplies: ["Tư vấn lộ trình", "Kiểm tra trình độ", "Học phí khóa học", "Lịch khai giảng"]
+    },
+    ielts: {
+      teaserDesktop: "ZIM xin chào 👋 Bạn cần hỗ trợ chọn khóa học hay tìm hiểu lộ trình?",
+      teaserMobile: "Bạn cần ZIM hỗ trợ gì? 👋",
+      greeting1: "Chào bạn 👋 Mình thấy bạn đang tìm hiểu khóa học IELTS tại ZIM.",
+      greeting2: "Bạn muốn xem thông tin nào trước?",
+      quickReplies: ["Lộ trình IELTS", "Kiểm tra band hiện tại", "Học phí IELTS", "Lịch khai giảng"]
+    }
+  };
+
+  // Canned demo replies so the quick-reply flow feels complete in this prototype.
+  const DEMO_REPLIES = {
+    "Tư vấn lộ trình": "Để gợi ý lộ trình phù hợp, mình cần biết bạn đang hướng tới mục tiêu nào: IELTS, TOEIC hay giao tiếp?",
+    "Kiểm tra trình độ": "Bạn có thể làm bài mini test 4 câu (khoảng 2 phút) để mình chẩn đoán trình độ hiện tại nhé.",
+    "Học phí khóa học": "Học phí ZIM thay đổi theo lộ trình và đầu ra mong muốn. Bạn đang quan tâm khóa nào để mình báo giá chính xác hơn?",
+    "Lịch khai giảng": "ZIM khai giảng nhiều lớp trong tháng. Bạn muốn học buổi tối, cuối tuần hay linh hoạt theo giờ trống của mình?",
+    "Lộ trình IELTS": "Bạn đang nhắm mức điểm IELTS nào và có mốc thời gian thi dự kiến chưa?",
+    "Kiểm tra band hiện tại": "Mình gửi bạn bài test nhanh để ước lượng band điểm hiện tại nhé, chỉ mất khoảng 2 phút.",
+    "Học phí IELTS": "Học phí khóa IELTS phụ thuộc vào band mục tiêu và số buổi học. Bạn đang ở band nào và muốn đạt bao nhiêu?",
+  };
+
+  const currentPage = new URLSearchParams(location.search).get("page") === "ielts" ? "ielts" : "home";
+  const config = PAGE_CONFIG[currentPage] || PAGE_CONFIG.home;
+  const isMobile = window.matchMedia("(max-width: 640px)").matches;
+  const TEASER_DELAY = isMobile ? 8000 : 5000;
+
+  /* ------------------------------------------------------------ */
+  /* 2. STATE (in-memory only — no browser storage per session)    */
+  /* ------------------------------------------------------------ */
+  const state = {
+    teaserShown: false,
+    panelOpened: false,
+    greetingPlayed: false
+  };
+
+  /* ------------------------------------------------------------ */
+  /* 3. DOM REFS                                                    */
+  /* ------------------------------------------------------------ */
+  const $launcher = document.getElementById("zim-launcher");
+  const $iconChat = document.getElementById("zim-icon-chat");
+  const $iconClose = document.getElementById("zim-icon-close");
+  const $panel = document.getElementById("zim-panel");
+  const $teaser = document.getElementById("zim-teaser");
+  const $teaserText = document.getElementById("zim-teaser-text");
+  const $messages = document.getElementById("zim-messages");
+  const $quickReplies = document.getElementById("zim-quick-replies");
+  const $input = document.getElementById("zim-input");
+  const $send = document.getElementById("zim-send");
+  const $closeBtn = document.getElementById("zim-close");
+
+  /* ------------------------------------------------------------ */
+  /* 4. RENDER HELPERS                                              */
+  /* ------------------------------------------------------------ */
+  function scrollToBottom() {
+    $messages.scrollTop = $messages.scrollHeight;
+  }
+
+  function addMessage(text, from) {
+    const wrap = document.createElement("div");
+
+    // Mỗi tin nhắn luôn chiếm toàn bộ chiều ngang của vùng chat.
+    // AI căn trái, khách hàng căn phải — tuyệt đối không đứng song song.
+    wrap.className = "zim-msg-enter flex w-full";
+    wrap.style.width = "100%";
+    wrap.style.display = "flex";
+    wrap.style.flex = "0 0 100%";
+    wrap.style.alignSelf = "stretch";
+    wrap.style.justifyContent = from === "user" ? "flex-end" : "flex-start";
+
+    const bubble = document.createElement("div");
+    bubble.className = from === "user"
+      ? "max-w-[80%] bg-red-700 text-white text-sm leading-relaxed rounded-2xl rounded-br-sm px-3.5 py-2.5"
+      : "max-w-[80%] bg-slate-100 text-slate-800 text-sm leading-relaxed rounded-2xl rounded-bl-sm px-3.5 py-2.5";
+    bubble.textContent = text;
+
+    wrap.appendChild(bubble);
+    $messages.appendChild(wrap);
+    scrollToBottom();
+  }
+
+  function showTyping() {
+    const wrap = document.createElement("div");
+    wrap.id = "zim-typing";
+    wrap.className = "zim-msg-enter flex";
+    wrap.style.width = "100%";
+    wrap.style.display = "flex";
+    wrap.style.flex = "0 0 100%";
+    wrap.style.alignSelf = "stretch";
+    wrap.style.justifyContent = "flex-start";
+    wrap.innerHTML =
+      '<div class="bg-slate-100 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1">' +
+      '<span class="zim-dot w-1.5 h-1.5 rounded-full bg-slate-400 inline-block"></span>' +
+      '<span class="zim-dot w-1.5 h-1.5 rounded-full bg-slate-400 inline-block"></span>' +
+      '<span class="zim-dot w-1.5 h-1.5 rounded-full bg-slate-400 inline-block"></span>' +
+      '</div>';
+    $messages.appendChild(wrap);
+    scrollToBottom();
+  }
+
+  function removeTyping() {
+    const el = document.getElementById("zim-typing");
+    if (el) el.remove();
+  }
+
+  function renderQuickReplies() {
+    $quickReplies.innerHTML = "";
+    config.quickReplies.forEach((label) => {
+      const btn = document.createElement("button");
+      btn.className = "zim-focus text-sm font-medium text-red-700 bg-white border border-red-200 hover:bg-red-50 rounded-full px-3.5 py-2 transition-colors";
+      btn.textContent = label;
+      btn.addEventListener("click", () => handleQuickReply(label));
+      $quickReplies.appendChild(btn);
+    });
+    $quickReplies.classList.remove("hidden");
+  }
+
+  function hideQuickReplies() {
+    $quickReplies.classList.add("hidden");
+    $quickReplies.innerHTML = "";
+  }
+
+  /* ------------------------------------------------------------ */
+  /* 5. GREETING SEQUENCE                                           */
+  /* ------------------------------------------------------------ */
+  function playGreeting() {
+    if (state.greetingPlayed) return;
+    state.greetingPlayed = true;
+
+    showTyping();
+    setTimeout(() => {
+      removeTyping();
+      addMessage(config.greeting1, "bot");
+
+      showTyping();
+      setTimeout(() => {
+        removeTyping();
+        addMessage(config.greeting2, "bot");
+        renderQuickReplies();
+      }, 550); // 400–700ms window from the script
+    }, 500);
+  }
+
+  function handleQuickReply(label) {
+    hideQuickReplies();
+    addMessage("Mình muốn tìm hiểu " + label.charAt(0).toLowerCase() + label.slice(1) + ".", "user");
+
+    showTyping();
+    setTimeout(() => {
+      removeTyping();
+      const reply = DEMO_REPLIES[label] || "Cảm ơn bạn, ZIM sẽ hỗ trợ bạn nội dung này ngay nhé!";
+      addMessage(reply, "bot");
+    }, 700);
+  }
+
+  function handleFreeInput() {
+    const text = $input.value.trim();
+    if (!text) return;
+    hideQuickReplies();
+    addMessage(text, "user");
+    $input.value = "";
+
+    showTyping();
+    setTimeout(() => {
+      removeTyping();
+      addMessage("Cảm ơn bạn đã chia sẻ! ZIM ghi nhận câu hỏi và sẽ phản hồi chi tiết ngay sau đây.", "bot");
+    }, 700);
+  }
+
+  /* ------------------------------------------------------------ */
+  /* 6. TEASER BUBBLE (closed-widget state)                         */
+  /* ------------------------------------------------------------ */
+  function showTeaser() {
+    if (state.teaserShown || state.panelOpened) return;
+    state.teaserShown = true;
+    $teaserText.textContent = isMobile ? config.teaserMobile : config.teaserDesktop;
+    $teaser.classList.remove("hidden");
+  }
+
+  function hideTeaser() {
+    $teaser.classList.add("hidden");
+  }
+
+  setTimeout(showTeaser, TEASER_DELAY);
+
+  $teaser.addEventListener("click", () => {
+    hideTeaser();
+    openPanel();
+  });
+
+  /* ------------------------------------------------------------ */
+  /* 7. OPEN / CLOSE PANEL                                          */
+  /* ------------------------------------------------------------ */
+  function openPanel() {
+    state.panelOpened = true;
+    hideTeaser();
+    $panel.classList.remove("hidden");
+    $iconChat.classList.add("hidden");
+    $iconClose.classList.remove("hidden");
+    playGreeting();
+    $input.focus();
+  }
+
+  function closePanel() {
+    $panel.classList.add("hidden");
+    $iconChat.classList.remove("hidden");
+    $iconClose.classList.add("hidden");
+    // Per spec: closing the widget must not trigger it to reopen automatically.
+  }
+
+  $launcher.addEventListener("click", () => {
+    if ($panel.classList.contains("hidden")) {
+      openPanel();
+    } else {
+      closePanel();
+    }
+  });
+
+  $closeBtn.addEventListener("click", closePanel);
+
+  $send.addEventListener("click", handleFreeInput);
+  $input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleFreeInput();
+  });
+
+  /* ------------------------------------------------------------ */
+  /* 8. DEMO PAGE-CONTEXT SWITCHER (outside the widget itself)      */
+  /* ------------------------------------------------------------ */
+  const $ctxHome = document.getElementById("ctx-home");
+  const $ctxIelts = document.getElementById("ctx-ielts");
+  const $ctxReset = document.getElementById("ctx-reset");
+
+  function setActiveCtxButton(page) {
+    [$ctxHome, $ctxIelts].forEach((btn) => {
+      btn.classList.remove("bg-red-700", "text-white");
+      btn.classList.add("text-slate-500");
+    });
+    const active = page === "ielts" ? $ctxIelts : $ctxHome;
+    active.classList.add("bg-red-700", "text-white");
+    active.classList.remove("text-slate-500");
+  }
+  setActiveCtxButton(currentPage);
+
+  function goToPage(page) {
+    const url = new URL(location.href);
+    if (page === "ielts") {
+      url.searchParams.set("page", "ielts");
+    } else {
+      url.searchParams.delete("page");
+    }
+    location.href = url.toString();
+  }
+
+  $ctxHome.addEventListener("click", () => goToPage("home"));
+  $ctxIelts.addEventListener("click", () => goToPage("ielts"));
+  $ctxReset.addEventListener("click", () => location.reload());
+
+})();
+</script>
+</body>
+</html>
