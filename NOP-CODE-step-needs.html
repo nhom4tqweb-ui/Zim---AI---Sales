@@ -1,0 +1,371 @@
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  CODE NỘP - Step 1: Khai thác Nhu cầu                          ║
+  ║  Người làm: Hiếu                                                ║
+  ║  Dán toàn bộ nội dung file này vào: <div id="step-needs">      ║
+  ║  Yêu cầu CDN Tailwind + font Plus Jakarta Sans đã có sẵn       ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  STYLE CẦN THÊM VÀO <style> HOẶC <head> CỦA FILE TỔNG:
+  ─────────────────────────────────────────────────────────────────
+  .radio-active { border-color:#DA1E39!important; background:#FFF1F2!important; color:#7F1D1D!important; box-shadow:0 0 0 2px rgba(218,30,57,.2); }
+  .goal-active-ielts { border-color:#DA1E39; background:#FFF1F2; box-shadow:0 0 0 2.5px rgba(218,30,57,.3); }
+  .goal-active-toeic { border-color:#4F46E5; background:#EEF2FF; box-shadow:0 0 0 2.5px rgba(79,70,229,.3); }
+  .goal-active-comm  { border-color:#059669; background:#ECFDF5; box-shadow:0 0 0 2.5px rgba(5,150,105,.3); }
+  @keyframes pulse-slow { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .pulse-slow { animation: pulse-slow 2s ease-in-out infinite; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation: fadeUp .45s cubic-bezier(.22,1,.36,1) both; }
+  ─────────────────────────────────────────────────────────────────
+-->
+
+<!-- Card header stripe -->
+<div class="bg-gradient-to-r from-[#DA1E39] to-[#e8344a] px-5 py-3.5 flex items-center justify-between">
+  <div class="flex items-center gap-2">
+    <!-- ZIM mini logo (SVG chính xác từ zim.vn) -->
+    <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="rgba(255,255,255,0.2)" d="M7 6h19v21H7z"/>
+      <path d="M16 32C7.165 32 0 24.84 0 16S7.165 0 16 0s16 7.16 16 16-7.165 16-16 16Zm5.235-24.43h-7.676s-2.067-.029-2.657 1.983L8.18 21.02s-.598 2.952 2.592 3.425h9.556s.482.028.655-.516l2.873-12.137s.094-.706-.655-.805c0 0-.49 0-.655.501L19.91 22.63s-.122.509-.655.509h-8.353s-.972.07-1.13-.982c0 0-.137-1.01 1.058-1.137h7.546s.533 0 .655-.522l2.86-12.11s.093-.734-.656-.812" fill="white"/>
+    </svg>
+    <span class="text-white text-sm font-bold">AI Sales Funnel · Bước 1/4</span>
+  </div>
+  <span class="text-white/70 text-xs font-medium flex items-center gap-1">
+    <span class="w-1.5 h-1.5 bg-white rounded-full pulse-slow"></span>
+    Miễn phí
+  </span>
+</div>
+
+<!-- Form body -->
+<div class="p-5 sm:p-7">
+  <!-- Heading -->
+  <div class="mb-5">
+    <h2 class="text-lg sm:text-xl font-extrabold text-slate-800 leading-snug">
+      Hãy cho ZIM biết mục tiêu của bạn! 🎯
+    </h2>
+    <p class="text-sm text-slate-500 mt-1">
+      Chỉ 4 câu ngắn — AI sẽ thiết kế lộ trình học riêng phù hợp với bạn.
+    </p>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="flex items-center gap-2 mb-6">
+    <div id="bar-1" class="h-1.5 flex-1 rounded-full bg-slate-100 transition-all duration-300"></div>
+    <div id="bar-2" class="h-1.5 flex-1 rounded-full bg-slate-100 transition-all duration-300"></div>
+    <div id="bar-3" class="h-1.5 flex-1 rounded-full bg-slate-100 transition-all duration-300"></div>
+    <div id="bar-4" class="h-1.5 flex-1 rounded-full bg-slate-100 transition-all duration-300"></div>
+    <span id="progress-label" class="text-xs text-slate-400 font-bold whitespace-nowrap">0/4</span>
+  </div>
+
+  <form id="needs-form" onsubmit="handleSubmit(event)" class="space-y-8">
+
+    <!-- ── Q1: Mục tiêu ─────────────────────────── -->
+    <div>
+      <div class="flex items-start gap-2 mb-3">
+        <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#DA1E39] text-white text-xs font-bold flex items-center justify-center mt-0.5">1</span>
+        <div>
+          <h3 class="text-sm font-bold text-slate-800">Bạn muốn học chứng chỉ nào?</h3>
+          <p class="text-xs text-slate-500">Chọn mục tiêu chứng chỉ phù hợp nhất</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pl-8">
+        <!-- IELTS -->
+        <button type="button" id="goal-ielts" onclick="selectGoal('ielts',this)"
+          class="goal-btn group flex flex-col items-center gap-2.5 p-4 rounded-2xl border-2 border-slate-200 bg-white text-center transition-all duration-200 cursor-pointer hover:border-red-300 hover:bg-red-50/50">
+          <div class="goal-icon-wrap w-11 h-11 rounded-xl bg-slate-100 group-hover:bg-white flex items-center justify-center transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 goal-icon-svg"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <div>
+            <p class="text-sm font-extrabold text-slate-800">IELTS</p>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">Du học · Định cư · Học bổng</p>
+          </div>
+          <span class="goal-check hidden w-5 h-5 rounded-full bg-[#DA1E39] flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </button>
+        <!-- TOEIC -->
+        <button type="button" id="goal-toeic" onclick="selectGoal('toeic',this)"
+          class="goal-btn group flex flex-col items-center gap-2.5 p-4 rounded-2xl border-2 border-slate-200 bg-white text-center transition-all duration-200 cursor-pointer hover:border-indigo-300 hover:bg-indigo-50/50">
+          <div class="goal-icon-wrap w-11 h-11 rounded-xl bg-slate-100 group-hover:bg-white flex items-center justify-center transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 goal-icon-svg"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div>
+            <p class="text-sm font-extrabold text-slate-800">TOEIC</p>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">Tốt nghiệp · Tăng lương · Thăng chức</p>
+          </div>
+          <span class="goal-check hidden w-5 h-5 rounded-full bg-indigo-600 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </button>
+        <!-- Giao tiếp -->
+        <button type="button" id="goal-communication" onclick="selectGoal('communication',this)"
+          class="goal-btn group flex flex-col items-center gap-2.5 p-4 rounded-2xl border-2 border-slate-200 bg-white text-center transition-all duration-200 cursor-pointer hover:border-emerald-300 hover:bg-emerald-50/50">
+          <div class="goal-icon-wrap w-11 h-11 rounded-xl bg-slate-100 group-hover:bg-white flex items-center justify-center transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 goal-icon-svg"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          </div>
+          <div>
+            <p class="text-sm font-extrabold text-slate-800">Giao tiếp</p>
+            <p class="text-[10px] text-slate-500 leading-tight mt-0.5">Tự tin nói chuyện người nước ngoài</p>
+          </div>
+          <span class="goal-check hidden w-5 h-5 rounded-full bg-emerald-600 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Q2: Lý do học ─────────────────────────── -->
+    <div>
+      <div class="flex items-start gap-2 mb-3">
+        <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#DA1E39] text-white text-xs font-bold flex items-center justify-center mt-0.5">2</span>
+        <div>
+          <h3 class="text-sm font-bold text-slate-800">Lý do chính bạn muốn học tiếng Anh?</h3>
+          <p class="text-xs text-slate-500">Giúp AI thiết kế nội dung và phương pháp tối ưu</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pl-8">
+        <button type="button" onclick="selectReason('graduate',this)" class="reason-btn flex items-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-left text-xs font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50">
+          <span class="text-base">📖</span> Ra trường / Tốt nghiệp
+        </button>
+        <button type="button" onclick="selectReason('immigration',this)" class="reason-btn flex items-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-left text-xs font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50">
+          <span class="text-base">✈️</span> Định cư nước ngoài
+        </button>
+        <button type="button" onclick="selectReason('salary',this)" class="reason-btn flex items-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-left text-xs font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50">
+          <span class="text-base">📈</span> Tăng lương / Thăng chức
+        </button>
+        <button type="button" onclick="selectReason('abroad',this)" class="reason-btn flex items-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-left text-xs font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50">
+          <span class="text-base">🎓</span> Du học / Học bổng
+        </button>
+        <button type="button" onclick="selectReason('work',this)" class="reason-btn flex items-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-left text-xs font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50">
+          <span class="text-base">💼</span> Công việc yêu cầu
+        </button>
+        <button type="button" onclick="selectReason('self',this)" class="reason-btn flex items-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-left text-xs font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50">
+          <span class="text-base">🌟</span> Nâng cấp kỹ năng bản thân
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Q3: Rào cản thời gian ─────────────────── -->
+    <div>
+      <div class="flex items-start gap-2 mb-3">
+        <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#DA1E39] text-white text-xs font-bold flex items-center justify-center mt-0.5">3</span>
+        <div>
+          <h3 class="text-sm font-bold text-slate-800">Thời gian bạn có thể dành mỗi ngày?</h3>
+          <p class="text-xs text-slate-500">ZIM thiết kế lịch học xung quanh cuộc sống bận rộn của bạn</p>
+        </div>
+      </div>
+      <div class="space-y-2 pl-8">
+        <button type="button" onclick="selectRadio('time','very_busy',this)" class="time-btn flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50 text-left">
+          <span class="radio-dot flex-shrink-0 w-4 h-4 rounded-full border-2 border-slate-300 transition-all"></span>
+          <span>⚡ Rất bận — chỉ có dưới 30 phút/ngày</span>
+        </button>
+        <button type="button" onclick="selectRadio('time','busy',this)" class="time-btn flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50 text-left">
+          <span class="radio-dot flex-shrink-0 w-4 h-4 rounded-full border-2 border-slate-300 transition-all"></span>
+          <span>🕐 Bận vừa — khoảng 30–60 phút/ngày</span>
+        </button>
+        <button type="button" onclick="selectRadio('time','flexible',this)" class="time-btn flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50 text-left">
+          <span class="radio-dot flex-shrink-0 w-4 h-4 rounded-full border-2 border-slate-300 transition-all"></span>
+          <span>📚 Khá rảnh — có thể 1–2 tiếng/ngày</span>
+        </button>
+        <button type="button" onclick="selectRadio('time','no_barrier',this)" class="time-btn flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50 text-left">
+          <span class="radio-dot flex-shrink-0 w-4 h-4 rounded-full border-2 border-slate-300 transition-all"></span>
+          <span>✅ Không có rào cản về thời gian</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Q4: Ngân sách ─────────────────────────── -->
+    <div>
+      <div class="flex items-start gap-2 mb-3">
+        <span class="flex-shrink-0 w-6 h-6 rounded-full bg-[#DA1E39] text-white text-xs font-bold flex items-center justify-center mt-0.5">4</span>
+        <div>
+          <h3 class="text-sm font-bold text-slate-800">Ngân sách học phí bạn đang cân nhắc?</h3>
+          <p class="text-xs text-slate-500">Bảo mật tuyệt đối — chỉ dùng để tư vấn gói học phù hợp</p>
+        </div>
+      </div>
+      <div class="space-y-2 pl-8">
+        <button type="button" onclick="selectRadio('budget','low',this)" class="budget-btn flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50 text-left">
+          <span class="radio-dot flex-shrink-0 w-4 h-4 rounded-full border-2 border-slate-300 transition-all"></span>
+          <span>💡 Dưới 5 triệu — Ưu tiên tiết kiệm chi phí</span>
+        </button>
+        <button type="button" onclick="selectRadio('budget','mid',this)" class="budget-btn flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50 text-left">
+          <span class="radio-dot flex-shrink-0 w-4 h-4 rounded-full border-2 border-slate-300 transition-all"></span>
+          <span>💰 5 – 10 triệu — Cân đối chi phí & kết quả</span>
+        </button>
+        <button type="button" onclick="selectRadio('budget','high',this)" class="budget-btn flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50 text-left">
+          <span class="radio-dot flex-shrink-0 w-4 h-4 rounded-full border-2 border-slate-300 transition-all"></span>
+          <span>💎 10 – 20 triệu — Ưu tiên chất lượng đào tạo</span>
+        </button>
+        <button type="button" onclick="selectRadio('budget','no_barrier',this)" class="budget-btn flex items-center gap-3 w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-150 hover:border-slate-300 hover:bg-slate-50 text-left">
+          <span class="radio-dot flex-shrink-0 w-4 h-4 rounded-full border-2 border-slate-300 transition-all"></span>
+          <span>🚀 Ngân sách không phải vấn đề</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Nút Submit ─────────────────────────────── -->
+    <div class="pt-1">
+      <button id="submit-btn" type="submit" disabled
+        class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-bold text-sm transition-all duration-200 bg-slate-100 text-slate-400 cursor-not-allowed">
+        <span id="submit-label">Gửi câu trả lời</span>
+      </button>
+
+      <!-- Trust signals ZIM -->
+      <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100">
+        <div class="flex flex-wrap items-center justify-center gap-4 text-[11px] text-slate-500 font-medium">
+          <span class="flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DA1E39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            Tư vấn miễn phí 100%
+          </span>
+          <span class="flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DA1E39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            Không spam / gọi điện liên tục
+          </span>
+          <span class="flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DA1E39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            Kết quả cá nhân trong 2 phút
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- ── Submitted State (ẩn mặc định) ────────────── -->
+  <div id="submitted-state" class="hidden text-center py-4">
+    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#DA1E39] to-[#b0152e] flex items-center justify-center mx-auto mb-5 shadow-lg shadow-red-200">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    </div>
+    <h2 class="text-lg font-extrabold text-slate-800 mb-1">ZIM đã ghi nhận mục tiêu của bạn! 🎉</h2>
+    <p class="text-sm text-slate-500 mb-5 max-w-sm mx-auto">AI ZIM đang phân tích và chuẩn bị bài kiểm tra đầu vào phù hợp nhất cho bạn…</p>
+    <div id="summary-chips" class="flex flex-wrap justify-center gap-2 mb-5"></div>
+    <div class="bg-slate-100 rounded-xl p-3 flex items-center gap-3">
+      <div class="w-7 h-7 rounded-full bg-[#DA1E39] flex items-center justify-center flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="pulse-slow"><circle cx="12" cy="12" r="3"/><path d="M3 12h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7-.7.7m.7 11.4-.7-.7M6.3 17.7l-.7.7"/></svg>
+      </div>
+      <div class="text-left">
+        <p class="text-xs font-bold text-slate-700">Đang chuyển sang Bước 2: Mini Test AI…</p>
+        <div class="mt-1.5 h-1 rounded-full bg-slate-200 overflow-hidden">
+          <div id="progress-anim" class="h-full bg-[#DA1E39] rounded-full" style="width:10%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /form body -->
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPT — dán vào trước </body> của file tổng
+     (hoặc để ngay đây nếu file tổng cho phép)
+     ═══════════════════════════════════════════════ -->
+<script>
+(function() {
+  const state = { goal: '', reason: '', time: '', budget: '' };
+
+  const GOAL_STYLES = {
+    ielts:         { active: 'goal-active-ielts', iconColor: '#DA1E39' },
+    toeic:         { active: 'goal-active-toeic', iconColor: '#4F46E5' },
+    communication: { active: 'goal-active-comm',  iconColor: '#059669' },
+  };
+
+  function getFilledCount() {
+    return [state.goal, state.reason, state.time, state.budget].filter(Boolean).length;
+  }
+
+  function updateProgress() {
+    const n = getFilledCount();
+    [1,2,3,4].forEach(i => {
+      const bar = document.getElementById('bar-' + i);
+      bar.style.background = i <= n ? '#DA1E39' : '';
+      bar.className = 'h-1.5 flex-1 rounded-full transition-all duration-300 ' + (i <= n ? '' : 'bg-slate-100');
+    });
+    document.getElementById('progress-label').textContent = n + '/4';
+
+    const btn   = document.getElementById('submit-btn');
+    const label = document.getElementById('submit-label');
+    if (n === 4) {
+      btn.disabled = false;
+      btn.className = 'w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-bold text-sm transition-all duration-200 bg-[#DA1E39] hover:bg-[#B91C1C] text-white shadow-md hover:shadow-lg active:scale-[0.98]';
+      label.innerHTML = '✨ Xem kết quả AI &amp; Làm bài Test ngay &nbsp;→';
+    } else {
+      btn.disabled = true;
+      btn.className = 'w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-bold text-sm transition-all duration-200 bg-slate-100 text-slate-400 cursor-not-allowed';
+      label.textContent = 'Gửi câu trả lời';
+    }
+  }
+
+  window.selectGoal = function(id, el) {
+    state.goal = id;
+    document.querySelectorAll('.goal-btn').forEach(btn => {
+      btn.classList.remove('goal-active-ielts','goal-active-toeic','goal-active-comm');
+      btn.querySelector('.goal-icon-wrap').style.background = '';
+      btn.querySelector('.goal-icon-svg').style.color = '';
+      btn.querySelector('.goal-check').classList.add('hidden');
+    });
+    const s = GOAL_STYLES[id];
+    el.classList.add(s.active);
+    el.querySelector('.goal-icon-wrap').style.background = 'white';
+    el.querySelector('.goal-icon-svg').style.color = s.iconColor;
+    el.querySelector('.goal-check').classList.remove('hidden');
+    updateProgress();
+  };
+
+  window.selectReason = function(id, el) {
+    state.reason = id;
+    document.querySelectorAll('.reason-btn').forEach(btn => {
+      btn.classList.remove('radio-active');
+      btn.classList.add('border-slate-200','bg-white','text-slate-700');
+    });
+    el.classList.add('radio-active');
+    el.classList.remove('border-slate-200','bg-white','text-slate-700');
+    updateProgress();
+  };
+
+  window.selectRadio = function(group, id, el) {
+    state[group] = id;
+    const cls = group + '-btn';
+    document.querySelectorAll('.' + cls).forEach(btn => {
+      btn.classList.remove('radio-active');
+      btn.classList.add('border-slate-200','bg-white','text-slate-700');
+      const dot = btn.querySelector('.radio-dot');
+      dot.style.background = '';
+      dot.style.borderColor = '';
+      dot.innerHTML = '';
+    });
+    el.classList.add('radio-active');
+    el.classList.remove('border-slate-200','bg-white','text-slate-700');
+    const dot = el.querySelector('.radio-dot');
+    dot.style.background  = '#DA1E39';
+    dot.style.borderColor = '#DA1E39';
+    dot.innerHTML = '<span style="display:block;width:5px;height:5px;border-radius:50%;background:white;margin:auto"></span>';
+    updateProgress();
+  };
+
+  const LABELS = {
+    goal:   { ielts:'IELTS', toeic:'TOEIC', communication:'Giao tiếp' },
+    reason: { graduate:'Ra trường / Tốt nghiệp', immigration:'Định cư nước ngoài', salary:'Tăng lương / Thăng chức', abroad:'Du học / Học bổng', work:'Công việc yêu cầu', self:'Nâng cấp kỹ năng bản thân' },
+    time:   { very_busy:'< 30 phút/ngày', busy:'30–60 phút/ngày', flexible:'1–2 tiếng/ngày', no_barrier:'Không rào cản thời gian' },
+    budget: { low:'Dưới 5 triệu', mid:'5–10 triệu', high:'10–20 triệu', no_barrier:'Ngân sách linh hoạt' },
+  };
+
+  window.handleSubmit = function(e) {
+    e.preventDefault();
+    if (getFilledCount() < 4) return;
+
+    document.getElementById('needs-form').classList.add('hidden');
+    const sub = document.getElementById('submitted-state');
+    sub.classList.remove('hidden');
+
+    // Animate progress bar
+    const bar = document.getElementById('progress-anim');
+    if (bar) { setTimeout(() => { bar.style.transition='width 2s ease-out'; bar.style.width='100%'; }, 50); }
+
+    document.getElementById('summary-chips').innerHTML =
+      ['goal','reason','time','budget'].map(k =>
+        `<span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#FFF1F2;color:#7F1D1D;border:1px solid #FECDD3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DA1E39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          ${LABELS[k][state[k]] || state[k]}
+        </span>`
+      ).join('');
+
+    document.dispatchEvent(new CustomEvent('zim:step-needs-complete', { detail: { ...state } }));
+  };
+})();
+</script>
