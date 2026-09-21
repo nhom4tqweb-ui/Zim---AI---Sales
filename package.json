@@ -1,23 +1,17 @@
 {
-  "name": "zim-academy-backend",
+  "name": "scheduling-app-be",
   "version": "1.0.0",
-  "description": "Backend 3 - VietQR Payment Orders, Bank Reconciliation Webhook/Cronjob, and Web Push Notifications for ZIM Academy",
-  "main": "src/server.js",
-  "type": "commonjs",
+  "description": "Backend: Server & Database init, error middlewares, schedule API",
+  "main": "server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "mongoose": "^8.6.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "node-cron": "^3.0.3",
-    "web-push": "^3.6.7",
-    "axios": "^1.7.7",
-    "helmet": "^7.1.0",
-    "morgan": "^1.10.0",
-    "express-rate-limit": "^7.4.0"
+    "express": "^4.19.2",
+    "mongoose": "^8.5.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"

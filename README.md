@@ -1,55 +1,58 @@
-# ZIM Academy — Backend 3
+# BE — Khởi tạo Server & Database
 
-Backend cho 3 nhiệm vụ được giao:
-1. Sinh mã đơn hàng & dữ liệu VietQR.
-2. Webhook/Cronjob đối soát biến động số dư ngân hàng → cấp quyền học.
-3. Web Push Notification nhắc bài tập.
+Code cho task "Khởi tạo Server & Database" trong đồ án.
 
-Stack: **Node.js + Express + MongoDB (Mongoose)** — theo quyết định chung của nhóm.
+## Cấu trúc thư mục
 
-## Cài đặt
+```
+BE/
+├── .env.example          # copy thành .env và điền giá trị thật
+├── package.json
+├── server.js             # entry point
+├── src/
+│   ├── app.js             # cấu hình express, cors, gắn route + middleware lỗi
+│   ├── config/
+│   │   └── db.js          # kết nối MongoDB (mongoose)
+│   ├── middlewares/
+│   │   ├── notFound.js    # bắt lỗi 404
+│   │   └── errorHandler.js# xử lý lỗi tập trung, tránh crash server
+│   ├── models/
+│   │   └── Schedule.js    # model lịch học
+│   └── routes/
+│       └── schedule.routes.js  # GET /api/schedules/:studentId
+├── scripts/
+│   ├── db-start.sh        # chạy mongod local
+│   ├── db-dump.sh         # sao lưu dữ liệu test ra backups/
+│   └── db-restore.sh      # khôi phục từ bản dump gần nhất
+├── data/db/                # nơi mongod lưu dữ liệu khi chạy local
+└── backups/                 # nơi lưu các bản dump
+
+```
+
+## Cài đặt & chạy
 
 ```bash
+cd BE
 npm install
-cp .env.example .env
-# điền MONGO_URI, thông tin ngân hàng, WEBHOOK_API_KEY hoặc WEBHOOK_HMAC_SECRET, VAPID keys...
-npx web-push generate-vapid-keys   # dán kết quả vào VAPID_PUBLIC_KEY / VAPID_PRIVATE_KEY
-npm run dev
+cp .env.example .env        # chỉnh PORT / MONGO_URI nếu cần
+npm run dev                 # hoặc: npm start
 ```
 
-Server chạy tại `http://localhost:4000`, health check: `GET /health`.
+## Dùng script quản lý dữ liệu
 
-## API Endpoints
-
-| Method | Path | Mô tả |
-|---|---|---|
-| POST | `/api/v1/orders/create` | Tạo đơn hàng, trả về dữ liệu render VietQR |
-| GET  | `/api/v1/orders/:orderCode` | FE polling trạng thái đơn hàng |
-| POST | `/api/v1/payments/webhook` | Nhận IPN từ SePay/Casso/ngân hàng (cần header xác thực) |
-| GET  | `/api/v1/notifications/vapid-public-key` | Lấy public key để FE subscribe push |
-| POST | `/api/v1/notifications/subscribe` | Lưu push subscription của học viên |
-| POST | `/api/v1/notifications/send-reminder` | Gửi nhắc bài tập thủ công tới 1 học viên |
-
-Ví dụ tạo đơn:
 ```bash
-curl -X POST http://localhost:4000/api/v1/orders/create \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":"66f0a1...","course_id":"66f0b2...","amount":990000}'
+./scripts/db-start.sh       # nếu chạy Mongo local (không dùng Docker/Atlas)
+./scripts/db-dump.sh        # sao lưu dữ liệu hiện tại
+./scripts/db-restore.sh     # khôi phục từ bản dump gần nhất
 ```
 
-## Cấu hình webhook phía SePay/Casso
+## API đã có
 
-1. Dashboard → Webhooks → Thêm webhook, URL trỏ tới `https://<domain-cua-ban>/api/v1/payments/webhook`.
-2. Chọn phương thức xác thực **API Key** (đơn giản, đủ dùng) hoặc **HMAC-SHA256** (an toàn hơn, khuyến nghị) — tương ứng cấu hình `WEBHOOK_API_KEY` hoặc `WEBHOOK_HMAC_SECRET` trong `.env`.
-3. Nội dung chuyển khoản của khách **bắt buộc phải chứa `orderCode`** (vd: `ZIM240917A1B2C3`) để hệ thống đối soát tự động — cần hiển thị rõ mã này trên UI thanh toán cho khách copy/nhớ.
+- `GET /api/schedules/:studentId` — trả về danh sách lịch học của học viên,
+  dùng cho FE 3 để kích hoạt popup nhắc lịch.
 
-## Tài liệu chi tiết
+## Việc cần làm tiếp
 
-- [`docs/sequence-diagrams.md`](./docs/sequence-diagrams.md) — sơ đồ luồng (Mermaid) cho cả 4 luồng: tạo đơn, webhook, cronjob backup, push notification.
-- [`docs/db-schema.md`](./docs/db-schema.md) — schema đầy đủ 3 bảng `Orders`, `Enrollments`, `PushSubscriptions`.
-- [`docs/edge-cases.md`](./docs/edge-cases.md) — chi tiết cách xử lý 8 nhóm edge case (chuyển sai tiền, đơn đã huỷ, webhook trùng, race condition, v.v...).
-
-## Ghi chú tích hợp với các phần khác của nhóm
-
-- **FE 3 (Push Notification):** cần import model/service Bài tập thật vào `src/jobs/reminderJob.js` (hàm `getUpcomingDeadlines`) — hiện đang để dạng placeholder vì model Assignment không thuộc phạm vi Backend 3.
-- **Backend chung:** `studentId`/`courseId` được coi là `ObjectId` tham chiếu tới collection User/Course do phần khác của nhóm quản lý — chưa có ràng buộc FK ở tầng DB (đặc thù MongoDB), validate ở tầng service khi cần.
+- Viết seed script để tạo dữ liệu Schedule mẫu.
+- Thêm validate input (vd. dùng `express-validator` hoặc `joi`) cho các route sau này.
+- Khi lên production, giới hạn `cors()` về đúng domain của FE thay vì mở toàn bộ.

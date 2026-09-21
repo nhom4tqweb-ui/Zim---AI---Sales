@@ -1,21 +1,12 @@
-const env = require('./config/env');
-const { connectDB } = require('./config/db');
-const app = require('./app');
-const { scheduleReconciliationJob } = require('./jobs/reconciliationJob');
-const { scheduleReminderJob } = require('./jobs/reminderJob');
+require('dotenv').config();
 
-async function main() {
-  await connectDB();
+const app = require('./src/app');
+const connectDB = require('./src/config/db');
 
-  app.listen(env.port, () => {
-    console.log(`[Server] ZIM Academy Backend đang chạy tại http://localhost:${env.port}`);
+const PORT = process.env.PORT || 5000;
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`[Server] Running on http://localhost:${PORT}`);
   });
-
-  scheduleReconciliationJob();
-  scheduleReminderJob(); // truyền getUpcomingDeadlines thật vào đây khi module Bài tập sẵn sàng
-}
-
-main().catch((err) => {
-  console.error('[Server] Không thể khởi động:', err);
-  process.exit(1);
 });
