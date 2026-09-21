@@ -1,0 +1,21 @@
+{
+  "name": "be2-leads-crm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BE2 — Quan ly Leads & CRM Phan loai: schema phieu ban hang, thuat toan gan nhan tu dong (da_dien_form / da_lam_micro_test / da_de_lai_thong_tin_thanh_toan), va logic sinh kich ban follow-up cho doi Sales theo cap do rot cua khach.",
+  "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node test-leads.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.18.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
