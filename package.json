@@ -1,25 +1,15 @@
 {
-  "name": "zim-academy-backend",
-  "version": "1.0.0",
-  "description": "Backend 3 - VietQR Payment Orders, Bank Reconciliation Webhook/Cronjob, and Web Push Notifications for ZIM Academy",
-  "main": "src/server.js",
-  "type": "commonjs",
+  "name": "zim-sales-ai-demo",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Full-stack demo: ZIM AI Consultant + course completion voucher modal",
+  "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check server/conversationEngine.js && node --check server/recommendationEngine.js && node --check server/zimKnowledge.js && node --check server/leadStore.js && node --check server/llmAdapter.js && node --check server/voucherStore.js && node --check server/analytics.js && node --check public/js/main.js && node --check public/js/chat.js && node --check public/js/confetti.js"
   },
-  "dependencies": {
-    "express": "^4.19.2",
-    "mongoose": "^8.6.0",
-    "dotenv": "^16.4.5",
-    "node-cron": "^3.0.3",
-    "web-push": "^3.6.7",
-    "axios": "^1.7.7",
-    "helmet": "^7.1.0",
-    "morgan": "^1.10.0",
-    "express-rate-limit": "^7.4.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.4"
+  "engines": {
+    "node": ">=18"
   }
 }

@@ -1,55 +1,88 @@
-# ZIM Academy — Backend 3
+# ZIM Sales AI Demo (v1.1)
 
-Backend cho 3 nhiệm vụ được giao:
-1. Sinh mã đơn hàng & dữ liệu VietQR.
-2. Webhook/Cronjob đối soát biến động số dư ngân hàng → cấp quyền học.
-3. Web Push Notification nhắc bài tập.
+Prototype cho phần **Chatbot tư vấn nổi góc phải + Modal chúc mừng hoàn thành khóa học kèm voucher thi IELTS**.
 
-Stack: **Node.js + Express + MongoDB (Mongoose)** — theo quyết định chung của nhóm.
+## 1. Chạy dự án
 
-## Cài đặt
+Yêu cầu Node.js 18 trở lên. Không cần `npm install` vì chỉ dùng module có sẵn của Node.
 
 ```bash
-npm install
-cp .env.example .env
-# điền MONGO_URI, thông tin ngân hàng, WEBHOOK_API_KEY hoặc WEBHOOK_HMAC_SECRET, VAPID keys...
-npx web-push generate-vapid-keys   # dán kết quả vào VAPID_PUBLIC_KEY / VAPID_PRIVATE_KEY
-npm run dev
+npm start
 ```
 
-Server chạy tại `http://localhost:4000`, health check: `GET /health`.
+Mở `http://localhost:3000`. Máy cần có mạng để tải Tailwind CDN và font Inter.
 
-## API Endpoints
+## 2. Có gì mới ở v1.1
 
-| Method | Path | Mô tả |
-|---|---|---|
-| POST | `/api/v1/orders/create` | Tạo đơn hàng, trả về dữ liệu render VietQR |
-| GET  | `/api/v1/orders/:orderCode` | FE polling trạng thái đơn hàng |
-| POST | `/api/v1/payments/webhook` | Nhận IPN từ SePay/Casso/ngân hàng (cần header xác thực) |
-| GET  | `/api/v1/notifications/vapid-public-key` | Lấy public key để FE subscribe push |
-| POST | `/api/v1/notifications/subscribe` | Lưu push subscription của học viên |
-| POST | `/api/v1/notifications/send-reminder` | Gửi nhắc bài tập thủ công tới 1 học viên |
+| Vấn đề ở bản cũ | Cách sửa |
+|---|---|
+| Bot nói "không hứa chắc đầu ra", ngược với chính sách của ZIM | Nói đúng cam kết: không đạt điểm cam kết thì được tài trợ học lại và miễn phí thi lại |
+| Gần như không có thông tin thật của ZIM | Thêm kho `server/zimKnowledge.js`: học phí, cam kết, sĩ số, hình thức học, lệ phí thi, ưu đãi, hotline, mỗi dữ kiện có link nguồn |
+| Trả lời rào cản lại dán nguyên đoạn lộ trình | Lộ trình chỉ hiện một lần; sau đó chỉ hỏi "Bạn muốn tìm hiểu thêm phần nào?" |
+| "1 khóa" bị hiểu thành band 1 | Bỏ các số đi kèm đơn vị (khóa, tháng, triệu, tuổi…) và kiểm tra thang điểm (IELTS 1.0–9.0, TOEIC 10–990) |
+| Câu không hiểu thì lặp lại câu hỏi cũ mãi | Có câu trả lời dự phòng; sau 2 lần liên tiếp thì mời để lại SĐT/hotline |
+| Không ghi nhận số điện thoại, câu chuyển tư vấn viên dùng từ kỹ thuật | Nhận diện SĐT Việt Nam, lưu lead vào `data/leads.json`, luôn kèm hotline 1900 2833 |
+| Gõ tự do không được xác nhận lại | "Mình ghi nhận rồi nè: đang 4.5, mục tiêu 6.5, trong 4 tháng…" rồi chỉ hỏi phần còn thiếu |
+| Phản đối học phí ghi đè điểm yếu khách đã chọn | Rào cản lưu riêng vào `concerns` |
+| Voucher 300.000đ là con số tự đặt | Bỏ; modal chỉ hiện quyền lợi có nguồn: ưu đãi kèm theo khi đăng ký thi qua ZIM (lệ phí 4.664.000đ) và tặng 200.000đ khi thi thử |
+| Người dùng thấy chữ kỹ thuật ("Integration point", "business rules"…) | Viết lại toàn bộ nội dung trang cho người dùng |
+| Lời chào cứng | Chào tự nhiên, mỗi lượt chia thành nhiều bong bóng ngắn như nhắn tin thật |
 
-Ví dụ tạo đơn:
-```bash
-curl -X POST http://localhost:4000/api/v1/orders/create \
-  -H "Content-Type: application/json" \
-  -d '{"student_id":"66f0a1...","course_id":"66f0b2...","amount":990000}'
+## 3. Nguồn thông tin ZIM
+
+Tất cả nằm ở `server/zimKnowledge.js`, đối chiếu lần cuối ngày 22/09/2026. **Kiểm tra lại trước buổi bảo vệ** vì học phí, ưu đãi có thể thay đổi.
+
+- https://zim.vn/ : định vị, cam kết đầu ra các chương trình, sĩ số Micro 8/Standard 15/1-1, học phí TOEIC, học bổng, Giao tiếp 5 giai đoạn
+- https://zim.vn/ielts : học phí IELTS từ 3.900.000đ, ưu đãi nhóm, hotline, đối tác British Council
+- https://zim.vn/ielts/ielts-online : IELTS Online từ 7.900.000đ, lớp nhóm nhỏ, lớp cấp tốc, cam kết khóa online, khuyến khích học thử
+- https://zim.vn/ielts/cap-toc-1-kem-1 : 1 kèm 1, video bài học bổ trợ, phòng tự học
+- https://zim.vn/hoc-phi-ielts : lộ trình cá nhân hóa theo test đầu vào, giáo viên IELTS 7.5–8.5
+- https://zim.vn/ielts/dang-ky-thi-ielts-tai-anh-ngu-zim : lệ phí thi 4.664.000đ, đăng ký trước ~2 tháng, thi thử tặng 200.000đ
+- https://www.youtube.com/@zimacademy : câu cam kết "tài trợ học lại và miễn phí thi lại"
+
+## 4. Cấu trúc
+
+```text
+server/
+  zimKnowledge.js        # kho dữ kiện ZIM + nguồn (MỚI)
+  conversationEngine.js  # state machine, trích xuất thông tin, xử lý rào cản (viết lại)
+  recommendationEngine.js# lộ trình sơ bộ + điểm phù hợp lấy từ kho dữ kiện
+  leadStore.js           # lưu SĐT/Zalo khách để lại (MỚI)
+  voucherStore.js        # cấp mã, không tạo trùng
+  llmAdapter.js          # (tùy chọn) LLM chỉ viết lại câu chữ, giữ nguyên dữ kiện
+public/
+  index.html, css/app.css
+  js/main.js             # modal chúc mừng, voucher, nối với chatbot
+  js/chat.js             # widget chat
+  js/confetti.js         # pháo giấy + phiếu voucher mini
+data/                    # tự sinh: vouchers.json, leads.json, analytics.ndjson
 ```
 
-## Cấu hình webhook phía SePay/Casso
+## 5. API
 
-1. Dashboard → Webhooks → Thêm webhook, URL trỏ tới `https://<domain-cua-ban>/api/v1/payments/webhook`.
-2. Chọn phương thức xác thực **API Key** (đơn giản, đủ dùng) hoặc **HMAC-SHA256** (an toàn hơn, khuyến nghị) — tương ứng cấu hình `WEBHOOK_API_KEY` hoặc `WEBHOOK_HMAC_SECRET` trong `.env`.
-3. Nội dung chuyển khoản của khách **bắt buộc phải chứa `orderCode`** (vd: `ZIM240917A1B2C3`) để hệ thống đối soát tự động — cần hiển thị rõ mã này trên UI thanh toán cho khách copy/nhớ.
+- `GET /api/chat/initial`: lời chào + gợi ý chọn nhanh
+- `POST /api/chat/stream`: SSE. Sự kiện `meta` → nhiều `delta` → `break` (sang bong bóng mới) → `done`
+- `GET /api/rewards/exam`: quyền lợi hiển thị trong modal
+- `POST /api/vouchers/claim`: cấp mã (cùng user + khóa học → trả lại mã cũ)
+- `POST /api/recommend`, `POST /api/events`, `GET /api/health`
 
-## Tài liệu chi tiết
+## 6. Kịch bản test nhanh
 
-- [`docs/sequence-diagrams.md`](./docs/sequence-diagrams.md) — sơ đồ luồng (Mermaid) cho cả 4 luồng: tạo đơn, webhook, cronjob backup, push notification.
-- [`docs/db-schema.md`](./docs/db-schema.md) — schema đầy đủ 3 bảng `Orders`, `Enrollments`, `PushSubscriptions`.
-- [`docs/edge-cases.md`](./docs/edge-cases.md) — chi tiết cách xử lý 8 nhóm edge case (chuyển sai tiền, đơn đã huỷ, webhook trùng, race condition, v.v...).
+**Luồng chính:** mở chat → `Tư vấn khóa IELTS` → `Du học` → `6.5` → `4.0–4.5` → `2–4 tháng` → `Buổi tối` → `Online` → `Writing/Speaking yếu` → thẻ lộ trình hiện ra.
 
-## Ghi chú tích hợp với các phần khác của nhóm
+**Gõ tự do:** `Mình đang 4.5, cần 6.5 trong 4 tháng, buổi tối khá bận và muốn học online.` → bot xác nhận đủ thông tin, chỉ hỏi mục đích.
 
-- **FE 3 (Push Notification):** cần import model/service Bài tập thật vào `src/jobs/reminderJob.js` (hàm `getUpcomingDeadlines`) — hiện đang để dạng placeholder vì model Assignment không thuộc phạm vi Backend 3.
-- **Backend chung:** `studentId`/`courseId` được coi là `ObjectId` tham chiếu tới collection User/Course do phần khác của nhóm quản lý — chưa có ràng buộc FK ở tầng DB (đặc thù MongoDB), validate ở tầng service khi cần.
+**Rào cản:** `Mình thấy học phí cao quá` · `Mình sợ học xong không đạt` · `học online có hiệu quả không?` · `mình tự học được không`
+
+**Câu hỏi thường gặp:** `lớp bao nhiêu người` · `giáo viên trình độ thế nào` · `có học bổng không` · `muốn đăng ký thi ielts` · `có luyện SAT không`
+
+**Chuyển tư vấn viên:** `Mình muốn nói chuyện với người thật qua Zalo` → `0912 345 678` → kiểm tra `data/leads.json`.
+
+**Câu lạ:** `thời tiết hôm nay thế nào` → trả lời dự phòng; gõ tiếp một câu lạ → mời để lại SĐT.
+
+**Voucher:** `Mô phỏng hoàn thành khóa học` → pháo giấy + phiếu voucher → `Nhận quà` → hiện mã → `Đăng ký thi qua ZIM` → chat mở sẵn phần đăng ký thi. Đóng modal bằng `Để sau` → chatbot nhắn chúc mừng.
+
+## 7. Ghép vào website nhóm
+
+- Mini Test (Step 2): lắng nghe `window.addEventListener('zim:open-step', e => …)`; `e.detail.profile` chứa thông tin khách đã khai trong chat.
+- Mở modal từ dashboard: `window.ZIMCompletionReward.open({ courseId, courseName })`. Nếu chat đang trả lời hoặc khách đang gõ, modal tự chờ.
